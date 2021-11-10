@@ -1,0 +1,22 @@
+{
+  "name": "microsoft-engage-classroom-app",
+  "version": "1.0.0",
+  "description": "Build a prototype of digital academic and social tools to help students during pandemic.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArshitaKalra/microsoft-engage-classroom-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArshitaKalra/microsoft-engage-classroom-app/issues"
+  },
+  "homepage": "https://github.com/ArshitaKalra/microsoft-engage-classroom-app#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
