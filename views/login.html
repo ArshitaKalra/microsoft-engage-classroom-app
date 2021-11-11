@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>MSEP</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+ >
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+    <script>
+      $(document).ready(function(){
+        if($("#error").text())
+       alert($("#error").text())
+      })
+    </script>
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div id="nav-placeholder">
+
+    </div>
+    
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("../public/navbar.html");
+    });
+    </script>
+    <br><br><br>
+    <center>
+      <h3> LOGIN PAGE</h3><br>
+      <hr><br>
+      <form method="post" action="login">
+        <div class="form-row offset-md-2  col-md-8">
+          <div class="col-md-4">EMAIL ID</div>
+          <div class="col-md-4 "> <input type="text" name="email" class="form-control" placeholder="enter email"></div>
+        </div><br><br>
+        <div class="form-row offset-md-2  col-md-8">
+          <div class="col-md-4">PASSWORD</div>
+          <div class="col-md-4 "> <input type="password" name="password" class="form-control"
+              placeholder="enter password"></div>
+        </div><br><br>
+       
+
+        <input type="submit" class="btn-group">
+      </form><br><br>
+      <a href="register">Create Account</a>
+    </center>
+
+  </div>
+  <span  id="error" style="display: none;"><%=error%></span>
+</body>
+
+</html>

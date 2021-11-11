@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>MSEP</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+ >
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($("#bool").text() == "false") {
+            $("#home").prop("style", "display:none")
+        } else {
+            $("#login").prop("style", "display:none")
+        }
+    })
+</script>
+
+<body>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <div class="container">
+        <div id="nav-placeholder">
+
+        </div>
+        
+        <script>
+        $(function(){
+          $("#nav-placeholder").load("../public/navbar.html");
+        });
+        </script><br><br><br>
+        <center>
+            <h3>MAIN PAGE </h3> <br>
+            <hr><br>
+        </center>
+        <div class="col-md-8 offset-md-2 " id="home">
+
+            <a href="home.html"> HOME </a><br><br>
+            <form method="post" action="/logout">
+                <button>Logout</button><br><br>
+            </form>
+        </div>
+        <div class="col-md-8 offset-md-2" id="login" style="display: true" ;>
+
+
+            <a href="login.html">LOGIN</a><br><br>
+            <a href="register.html">REGISTER</a>
+        </div>
+    </div>
+    <!--to be ignored hidden value-->
+    <div id="bool" style="display: none"><%=bool%></div>
+</body>
+
+</html>
