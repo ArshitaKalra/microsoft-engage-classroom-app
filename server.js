@@ -9,7 +9,7 @@ var bodyparser = require("body-parser");
 
 var { db } = require("./mongo")
 var usersCol = require("./schema/users")
-
+var teacherCol= require("./schema/teacher")
 app.set('view engine', 'ejs'); //'html'
 // app.engine('html', require('ejs').renderFile);
 
@@ -58,11 +58,16 @@ app.use(bodyparser.urlencoded({
 
 app.use((req, res, next) => {
     const {
-        userid
+        userid,
+        occupation
     } = req.session
     if (userid) {
         async function set(req, res) {
-            await usersCol.findOne({
+            var commonCol=usersCol;
+            if(occupation==1)
+                commonCol=teacherCol;
+            await commonCol
+            .findOne({
                     email: userid
                 })
                 .then(function (result) {
@@ -83,6 +88,9 @@ app.use((req, res, next) => {
         }
         set(req, res);
 
+
+
+
     } else
         next();
 
@@ -90,10 +98,14 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
     const {
-        userid
+        userid,
+        occupation
     } = req.session;
-    var bool = "false";
-    if (userid) bool = "true";
+    var bool = 0;
+    if(userid){
+    if (occupation==0) bool = 1;
+    else if(occupation)bool = 2;
+    }
     res.render("index", {
         bool: bool
     })
@@ -123,14 +135,70 @@ app.get('/register', redirectHome, (req, res) => {
         error: ""
     })
 })
+app.get('/homet', redirectLogin, (req, res) => {
+    const {
+        user
+    } = res.locals;
+    res.render("homet", {
+        user: res.locals.user
+    });
+
+})
+app.get('/logint', redirectHome, (req, res) => {
+  
+    res.render("logint", {
+        error: ""
+    })
+})
+
+app.get('/registert', redirectHome, (req, res) => {
+    res.render("registert", {
+        error: ""
+    })
+})
+
+
 
 app.get('/profile', redirectLogin, (req, res) => {
     res.render("profile", {
         user: res.locals.user
     });
 })
+app.get('/profilet', redirectLogin, (req, res) => {
+    res.render("profilet", {
+        user: res.locals.user
+    });
+})
 
 app.post("/profile", redirectLogin, upload.single('pic'), (req, res) => {
+    if (req.file) {
+        req.body.pic = req.file.filename;
+    } else {
+        req.body.pic = req.body.hdn;
+    }
+    usersCol.findOneAndUpdate({
+        email: req.body.email
+    }, {
+        $set: {
+            mobile: req.body.mobile,
+            pic: req.body.pic,
+            occupation: req.body.institution,
+            address: req.body.address,
+            dob: req.body.dob
+        }
+    }, {
+        new: true
+    }).then((docs) => {
+        if (docs) {
+
+            res.redirect("profile");
+        } else {
+            res.send("Error Occured");
+        }
+    })
+
+})
+app.post("/profilet", redirectLogin, upload.single('pic'), (req, res) => {
     if (req.file) {
         req.body.pic = req.file.filename;
     } else {
@@ -172,6 +240,7 @@ app.post('/login', redirectHome, (req, res) => {
 
                 if (result) {
                     req.session.userid = email;
+                    req.session.occupation=0;
                     res.redirect('/home')
                 } else
                     return res.redirect('/login');
@@ -214,6 +283,7 @@ app.post('/register', redirectHome, (req, res) => {
                         console.log(err)
                   
                     req.session.userid = email;
+                    req.session.occupation=0;
                     res.redirect('/home')
 
 
@@ -224,6 +294,79 @@ app.post('/register', redirectHome, (req, res) => {
             })
     } else
         res.render("register", {
+            error: "Please Fill Details Properly"
+        })
+
+})
+
+
+app.post('/logint', redirectHome, (req, res) => {
+    const {
+        email,
+        password
+    } = req.body;
+    if (email && password) {
+        teacherCol.findOne({
+                email: email
+            })
+            .then(function (result) {
+
+                if (result) {
+                    req.session.userid = email;
+                    req.session.occupation=1;
+                    res.redirect('/homet')
+                } else
+                    return res.redirect('/logint');
+
+            })
+            .catch(function (msg) {
+                console.log(msg)
+            });
+
+    } else
+        res.render('logint', {
+            error: "Please Fill Details Properly"
+        });
+
+})
+app.post('/registert', redirectHome, (req, res) => {
+    const {
+        name,
+        email,
+        password
+    } = req.body;
+    if (name && email && password) {
+        teacherCol.findOne({
+                email: email
+            })
+            .then((data) => {
+                if (data) {
+                    console.log("user exist")
+                    return res.render("registert", {
+                        error: "USER ALREADY EXISTS"
+                    });
+                }
+                req.body.pic = "user.png";
+                var collection = new teacherCol(req.body);
+
+             
+               
+                collection.save(function (err, doc) {
+                    if (err)
+                        console.log(err)
+                  
+                    req.session.userid = email;
+                    req.session.occupation=1;
+                    res.redirect('/homet')
+
+
+                });
+
+
+
+            })
+    } else
+        res.render("registert", {
             error: "Please Fill Details Properly"
         })
 
@@ -243,6 +386,21 @@ app.post('/logout', redirectLogin, (req, res) => {
 app.get('/', (req, res) => {        
     res.sendFile('index1', {root: __dirname});      
 });*/
+app.get('/create-course', (req, res) => {        
+    res.render("create-course", {
+        user: res.locals.user
+    });      
+});
+
+app.post('/create-course', (req, res) => {        
+   console.log(JSON.stringify(req.body));
+});
+
+app.get('/course-offered', (req, res) => {        
+    res.render("course-offered", {
+        user: res.locals.user
+    });      
+});
 app.get('/dashboard-stud', (req, res) => {        
     res.sendFile('public/dashboard-stud.html', {root: __dirname});      
 });

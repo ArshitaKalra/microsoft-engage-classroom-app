@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>MSEP</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+    <script>
+        function alert1() {
+            alert("saved successfully")
+        }
+        function showpreview(file, ref) {
+            //alert(document.getElementById("ppic").files.length);
+            //alert(document.getElementById("ppic").files[0].size);
+            //alert($(file)[0].files[0].size);
+            if ($(file)[0].files[0].size > 2097152) {
+                // alert("<=2 MB");
+                return;
+            }
+            if (file.files && file.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(ref).prop('src', e.target.result);
+                }
+                reader.readAsDataURL(file.files[0]);
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div id="nav-placeholder">
+
+        </div>
+
+        <script>
+            $(function () {
+                $("#nav-placeholder").load("/navbar.html");
+            });
+        </script><br><br><br>
+        <div class="row">
+            <div class="col-md-10 offset-md-1 text-center  bg-primary">
+                <h2> Profile </h2>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-10 offset-md-1 border">
+                <form method="POST"  action="create-course">
+
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="uid">Name of Course</label>
+                                <input type="text" required class="form-control" id="name" name="name"
+                                    placeholder="Enter Name of Course">
+                                <small id="errName" class="form-text text-primary">*</small>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="name">Course code</label>
+                                <input type="text" class="form-control" name="code" id="code"
+                                    placeholder="Enter Code for the course">
+                                <small id="errCode" class="form-text text-muted">*</small>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="mobile">Instructor</label>
+                                <input type="text" class="form-control" name="instructor" id="instructor"
+                                    aria-describedby="emailHelp" readonly value="<%=user.name%>">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-row'>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Institution">Pre-requisites</label>
+                                <input name="prerequisite" id="prerequisite" class="form-control"
+                                    aria-describedby="emailHelp" placeholder="prerequisites">
+
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="cap">Cap of Class</label>
+                                <input type="number" class="form-control" name="cap" id="cap"
+                                    aria-describedby="emailHelp" placeholder="cap">
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="meetlink">Meetlink</label>
+                                <input type="text" class="form-control" name="meetlink" id="meetlink"
+                                    placeholder="Enter meetlink">
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-row">
+                        <div class="col-md-4 offset-md-4 form-group text-center">
+                            Profile Pic: <br>
+
+                            <img src="uploads/course.png" class="mt-1 mb-1" width="100" height="100" alt="" id="ppic">
+                            <input type="file" accept="image/*" name="pic" id="pic" onchange="showpreview(this,ppic);">
+
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-1">
+                            <input type="checkbox" id="monday" name="monday" value="monday">
+                            <label for="monday">Monday</label><br>
+                            <input type="time" id="tmonday" name="tmonday">
+                        </div>
+                        <div class="col-md-1 ">
+                            <input type="checkbox" id="tuesday" name="tuesday" value="tuesday">
+                            <label for="tuesday">Tuesday</label><br>
+                            <input type="time" id="ttuesday" name="ttuesday">
+                        </div>
+                        <div class="col-md-1 ">
+                            <input type="checkbox" id="wednesday" name="wednesday" value="wednesday">
+                            <label for="wednesday">Wednesday</label><br>
+                            <input type="time" id="twednesday" name="twednesday">
+                        </div>
+                        <div class="col-md-1 ">
+                            <input type="checkbox" id="thursday" name="thursday" value="thursday">
+                            <label for="thursday">Thursday</label><br>
+                            <input type="time" id="tthursday" name="tthursday">
+                        </div>
+                        <div class="col-md-1">
+                            <input type="checkbox" id="friday" name="friday" value="friday">
+                            <label for="friday">&ensp; Friday</label><br>
+                            <input type="time" id="tfriday" name="tfriday">
+                        </div>
+                        <div class="col-md-1">
+                            <input type="checkbox" id="saturday" name="saturday" value="saturday">
+                            <label for="saturday">Saturday</label><br>
+                            <input type="time" id="tsaturday" name="tsaturday">
+                        </div>
+                        <div class="col-md-1">
+                            <input type="checkbox" id="sunday" name="sunday" value="sunday">
+                            <label for="sunday">Sunday</label><br>
+                            <input type="time" id="tsunday" name="tsunday">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-12 text-center">
+                            <input type="submit" value="Save" name="btn" class="btn btn-primary" id="btnSave"
+                                onclick="alert1()">
+
+                        </div>
+                    </div>
+            </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+
+</body>
+
+</html>
