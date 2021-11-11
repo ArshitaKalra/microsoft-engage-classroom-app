@@ -8,7 +8,7 @@ var bodyparser = require("body-parser");
 
 
 var { db } = require("./mongo")
-var usersCol = require("./schema/users.js")
+var usersCol = require("./schema/users")
 
 app.set('view engine', 'ejs'); //'html'
 // app.engine('html', require('ejs').renderFile);
@@ -94,7 +94,7 @@ app.get('/', (req, res) => {
     } = req.session;
     var bool = "false";
     if (userid) bool = "true";
-    res.render("index1", {
+    res.render("index", {
         bool: bool
     })
 
@@ -182,7 +182,7 @@ app.post('/login', redirectHome, (req, res) => {
             });
 
     } else
-        res.render('/login', {
+        res.render('login', {
             error: "Please Fill Details Properly"
         });
 
@@ -239,10 +239,10 @@ app.post('/logout', redirectLogin, (req, res) => {
 
 })
 
-
+/*
 app.get('/', (req, res) => {        
     res.sendFile('index1', {root: __dirname});      
-});
+});*/
 app.get('/dashboard-stud', (req, res) => {        
     res.sendFile('public/dashboard-stud.html', {root: __dirname});      
 });
