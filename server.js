@@ -10,6 +10,7 @@ var bodyparser = require("body-parser");
 var { db } = require("./mongo")
 var usersCol = require("./schema/users")
 var teacherCol= require("./schema/teacher")
+var courseCol= require("./schema/courses")
 app.set('view engine', 'ejs'); //'html'
 // app.engine('html', require('ejs').renderFile);
 
@@ -390,10 +391,94 @@ app.get('/create-course', (req, res) => {
     res.render("create-course", {
         user: res.locals.user
     });      
+
 });
 
 app.post('/create-course', (req, res) => {        
    console.log(JSON.stringify(req.body));
+   const {
+    code
+} = req.body;
+if (code) {
+    courseCol.findOne({
+            code: code
+        })
+        .then((data) => {
+            if (data) {
+                console.log("course exist")
+                return res.render("create-course", {
+                    error: "USER ALREADY EXISTS"
+                });
+            }
+            req.body.pic = "course.png";
+            var schedule=[];
+            if(req.body.monday){
+                schedule[0]=req.body.tmonday
+            }
+            else{
+                schedule[0]="";
+            }
+            if(req.body.tuesday){
+                schedule[1]=req.body.ttuesday
+            }
+            else{
+                schedule[1]="";
+            }
+            if(req.body.wednesday){
+                schedule[2]=req.body.twednesday
+            }
+            else{
+                schedule[2]="";
+            }
+            if(req.body.thursday){
+                schedule[3]=req.body.tthursday
+            }
+            else{
+                schedule[3]="";
+            }
+            if(req.body.friday){
+                schedule[4]=req.body.tfriday
+            }
+            else{
+                schedule[4]="";
+            }
+            if(req.body.saturday){
+                schedule[5]=req.body.tsaturday
+            }
+            else{
+                schedule[5]="";
+            }
+            if(req.body.sunday){
+                schedule[6]=req.body.tsunday
+            }
+            else{
+                schedule[6]="";
+            }
+            console.log(schedule);
+            req.body.schedule=schedule;
+            var collection = new courseCol(req.body);
+
+         
+           
+            collection.save(function (err, doc) {
+                if (err)
+                    console.log(err)
+              
+            
+
+
+            });
+
+
+
+        })
+        
+} else
+    res.render("registert", {
+        error: "Please Fill Details Properly"
+    })
+   
+
 });
 
 app.get('/course-offered', (req, res) => {        
