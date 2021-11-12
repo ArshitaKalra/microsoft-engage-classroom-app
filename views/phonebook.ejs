@@ -1,0 +1,48 @@
+<div>
+    <h1>PhoneBOOK</h1>
+</div>
+<hr>
+<div>
+    <h2>Students</h2>
+<% if(details!=null) { %>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>E-mail</th>
+        </tr>
+        <% details.forEach(function(item){ %>
+            <tr>
+                <td>
+                    <%= item.name%>
+                </td>
+                <td>
+                    <%= item.email%>
+                </td>
+
+            </tr>
+            <% }) %>
+    </table>
+    <% } %>
+</div>
+<div>
+    <h2>Teachers</h2>
+<% if(tdetails!=null) { %>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>E-mail</th>
+        </tr>
+        <% tdetails.forEach(function(item){ %>
+            <tr>
+                <td>
+                    <%= item.name%>
+                </td>
+                <td>
+                    <%= item.email%>
+                </td>
+
+            </tr>
+            <% }) %>
+    </table>
+    <% } %>
+</div>

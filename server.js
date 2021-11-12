@@ -481,6 +481,25 @@ if (code) {
 
 });
 
+app.get('/phonebook', (req, res) => {        
+    usersCol.find({}, function (err, studDetails){
+        if (err) {
+            console.log(err);
+        } else {
+            teacherCol.find({}, function(err, teacherDetails){
+                if(err){
+                    console.log(err)
+                }else{
+                    res.render("phonebook", {
+                        details: studDetails,
+                        tdetails:teacherDetails
+                    });
+                }
+            })
+        }
+    });
+});
+
 app.get('/course-offered', (req, res) => {        
     res.render("course-offered", {
         user: res.locals.user
@@ -495,9 +514,9 @@ app.get('/courses-enrolled', (req, res) => {
 app.get('/discussion-forum', (req, res) => {        
     res.sendFile('public/discussion-forum.html', {root: __dirname});      
 });
-app.get('/phonebook', (req, res) => {        
-    res.sendFile('public/phonebook.html', {root: __dirname});      
-});
+// app.get('/phonebook', (req, res) => {        
+//     res.sendFile('public/phonebook.html', {root: __dirname});      
+// });
 app.get('/report', (req, res) => {        
     res.sendFile('public/report.html', {root: __dirname});      
 });
