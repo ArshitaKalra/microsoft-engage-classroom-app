@@ -23,7 +23,7 @@ app.use(session({
     cookie: {}
 }));
 
-app.use(express.static("public"))
+app.use(express.static(__dirname+'/public'))
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/uploads');         ///////////////////////////////////////////////////////////////////
@@ -472,6 +472,25 @@ if (code) {
 
 
         })
+        teacherCol.findOneAndUpdate({
+            email: req.session.userid
+        }, {
+            $push: {
+                courseoffered: req.body.code,
+               
+            }
+        }, {
+            new: true
+        }).then((docs) => {
+            if (docs) {
+    
+               // res.redirect("profile");
+            } else {
+                res.send("Error Occured");
+            }
+        })
+
+
         
 } else
     res.render("registert", {
@@ -499,6 +518,19 @@ app.get('/phonebook', (req, res) => {
         }
     });
 });
+app.get('/allcourses', (req, res) => {        
+    courseCol.find({}, function (err, courses){
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("allcourses", {
+                courses: courses,
+                user:res.locals.user
+            });
+           
+        }
+    });
+});
 
 app.get('/course-offered', (req, res) => {        
     res.render("course-offered", {
@@ -514,15 +546,10 @@ app.get('/courses-enrolled', (req, res) => {
 app.get('/discussion-forum', (req, res) => {        
     res.sendFile('public/discussion-forum.html', {root: __dirname});      
 });
-// app.get('/phonebook', (req, res) => {        
-//     res.sendFile('public/phonebook.html', {root: __dirname});      
-// });
 app.get('/report', (req, res) => {        
     res.sendFile('public/report.html', {root: __dirname});      
 });
-app.get('/allcourses', (req, res) => {        
-    res.sendFile('public/allcourses.html', {root: __dirname});      
-});
+
 app.get('/calendar', (req, res) => {        
     res.sendFile('public/calendar.html', {root: __dirname});      
 });

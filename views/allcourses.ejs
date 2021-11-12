@@ -1,0 +1,44 @@
+<div>
+    <h1>All Offered Courses</h1>
+</div>
+<hr>
+<div>
+    <h2>Courses</h2>
+<% if(courses!=null) { %>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Course Code</th>
+            <th>Course Instructor</th>
+            <th>Prerequisite</th>
+            <th>Enroll</th>
+        </tr>
+        <% courses.forEach(function(item){ %>
+            <tr>
+                <td>
+                    <%= item.name%>
+                </td>
+                <td>
+                    <%= item.code%>
+                </td>
+                <td>
+                    <%= item.instructor%>
+                </td>
+                <td>
+                    <%= item.prerequisite%>
+                </td>
+                <td>
+                    <% if(item.enrolledstud.includes(user.userid)==false) { %>
+                    <input type="button" value="Enroll"  >
+                    <% }
+                    else{ %>
+                        <input type="button" value="Enrolled"  disabled>
+                        <% }%>
+
+                </td>
+
+            </tr>
+            <% }) %>
+    </table>
+    <% } %>
+</div>
