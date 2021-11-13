@@ -1,3 +1,5 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <div>
     <h1>All Offered Courses</h1>
 </div>
@@ -28,8 +30,8 @@
                     <%= item.prerequisite%>
                 </td>
                 <td>
-                    <% if(item.enrolledstud.includes(user.userid)==false) { %>
-                    <input type="button" value="Enroll"  >
+                    <%   if(item.enrolledstud.includes(user.email)==false) { %>
+                    <input id="<%=item.code%>" type="button" value="Enroll"  onclick='datacode("<%=item.code%>")'>
                     <% }
                     else{ %>
                         <input type="button" value="Enrolled"  disabled>
@@ -42,3 +44,14 @@
     </table>
     <% } %>
 </div>
+<script>
+function datacode(code){
+$.get(
+    "enroll",
+    {code : code},
+    function(data) {
+       alert(data);
+    }
+);
+}
+</script>

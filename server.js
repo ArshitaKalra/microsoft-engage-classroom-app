@@ -531,12 +531,53 @@ app.get('/allcourses', (req, res) => {
         }
     });
 });
+app.get('/enroll',(req,res)=>{
+    const code=req.query.code;
+    usersCol.findOneAndUpdate({
+        email: req.session.userid
+    }, {
+        $push: {
+            course: code,
+           
+        }
+    }, {
+        new: true
+    }).then((docs) => {
+        if (docs) {
 
+           // res.redirect("profile");
+        } else {
+            res.send("Error Occured");
+        }
+    })
+
+    courseCol.findOneAndUpdate({
+        code: code
+    }, {
+        $push: {
+            enrolledstud: req.session.userid,
+           
+        }
+    }, {
+        new: true
+    }).then((docs) => {
+        if (docs) {
+            res.send("Enrolled");
+           // res.redirect("profile");
+        } else {
+            res.send("Error Occured");
+        }
+    })
+
+
+
+})
 app.get('/course-offered', (req, res) => {        
     res.render("course-offered", {
         user: res.locals.user
     });      
 });
+
 app.get('/dashboard-stud', (req, res) => {        
     res.sendFile('public/dashboard-stud.html', {root: __dirname});      
 });
