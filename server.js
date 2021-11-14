@@ -525,7 +525,6 @@ app.get('/allcourses', (req, res) => {
         } else {
             res.render("allcourses", {
                 courses: courses,
-                user:res.locals.user
             });
            
         }
@@ -577,12 +576,49 @@ app.get('/course-offered', (req, res) => {
         user: res.locals.user
     });      
 });
+app.get('/course-enrolled', (req, res) => {   
+    var coursesEnrolled=res.locals.user.course;
+    var courseEnrolledDetails=[];
+    courseCol.find({}, function (err, courses){
+        if (err) {
+            console.log(err);
+        } else {
+            coursesEnrolled.forEach((item)=>{
+                courseEnrolledDetails.push(courses.find(coursedetail => coursedetail.code==item))
+  
+            })
+
+            res.render("course-enrolled",{
+                courses:courseEnrolledDetails
+            })
+            
+        }
+    });
+   
+});
+
+app.get('/singlecoursepage',(req,res)=>{
+
+    const code=req.query.code;
+    courseCol.find({code: code}, function (err, course){
+        if (err) {
+            console.log(err);
+        } else {
+        
+           
+            res.render("singlecoursepage",{
+                course:course[0]
+            })
+            
+        }
+    });
+})
 
 app.get('/dashboard-stud', (req, res) => {        
     res.sendFile('public/dashboard-stud.html', {root: __dirname});      
 });
 app.get('/courses-enrolled', (req, res) => {        
-    res.sendFile('public/courses-enrolled.html', {root: __dirname});      
+         
 });
 app.get('/discussion-forum', (req, res) => {        
     res.sendFile('public/discussion-forum.html', {root: __dirname});      
