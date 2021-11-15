@@ -8,6 +8,7 @@ var UserSchema=new mongoose.Schema({
     institute:String,
     dob:String,
     address:String,
-    course:[String]
+    course:[String],
+    schedule: { type : Array , "default" : [] }
 });
 module.exports=mongoose.model("user",UserSchema);

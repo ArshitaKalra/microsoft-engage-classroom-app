@@ -530,26 +530,16 @@ app.get('/allcourses', (req, res) => {
         }
     });
 });
+
+
 app.get('/enroll',(req,res)=>{
     const code=req.query.code;
-    usersCol.findOneAndUpdate({
-        email: req.session.userid
-    }, {
-        $push: {
-            course: code,
-           
-        }
-    }, {
-        new: true
-    }).then((docs) => {
-        if (docs) {
-
-           // res.redirect("profile");
-        } else {
-            res.send("Error Occured");
-        }
-    })
-
+    var start,classes,schedule,name;
+    Date.prototype.addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
     courseCol.findOneAndUpdate({
         code: code
     }, {
@@ -562,13 +552,58 @@ app.get('/enroll',(req,res)=>{
     }).then((docs) => {
         if (docs) {
             res.send("Enrolled");
+            classes=docs.classes;
+            schedule=docs.schedule;
+            name=docs.name;
+            studentsSchedule=[];
+            var date=new Date();
+    const title=name;
+    const url='/singlecoursepage?code='+code;
+    while(classes!=0){
+
+        date=date.addDays(1);
+        var day=date.getDay();
+        day=(day+6)%7;
+        if(schedule[day]!=''){
+            date.setHours(schedule[day][0]+schedule[day][1],schedule[day][3]+schedule[day][4],0)
+            studentsSchedule.push({
+                title:title,
+                url:url,
+                start:date
+            })
+            classes-=1;
+        }
+
+    }
+    usersCol.findOneAndUpdate({
+        email: req.session.userid
+    }, {
+        $push: {
+            course: code,
+            schedule:studentsSchedule
+           
+        }
+
+    }, {
+        new: true
+    }).then((docs) => {
+        if (docs) {
+
            // res.redirect("profile");
         } else {
             res.send("Error Occured");
         }
     })
 
+        } else {
+            res.send("Error Occured");
+        }
+    })
+    
 
+    
+
+    
 
 })
 app.get('/course-offered', (req, res) => {        

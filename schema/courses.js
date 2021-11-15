@@ -8,6 +8,7 @@ var CourseSchema=new mongoose.Schema({
     enrolledstud:[String],
     cap:Number,
     meetlink:String,
-    schedule: [String]
+    schedule: [String],
+    classes:Number
 });
 module.exports=mongoose.model("course",CourseSchema);
