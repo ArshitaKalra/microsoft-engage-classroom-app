@@ -1,0 +1,230 @@
+/*Home Page CSS*/
+html{
+  background:#01579b;
+
+}
+body{
+    font-family: 'Open Sans', sans-serif;
+    color:black;
+    margin-top:0px;
+}
+.container{
+  margin:0px auto;
+  margin-top:10%;
+}
+
+#welcome{
+  color:white;
+}
+
+h2{
+    font-size:4em;
+    font-weight:900;
+    color:black;
+}
+
+h4{
+    color:black;
+}
+
+.white{
+    color:white;
+}
+
+.blue{
+    color:#01579b;
+}
+
+a.blue{
+    text-decoration: none;
+}
+.logo{
+  color:skyblue;
+  font-style:bolder;
+}
+.input{
+  float:none;
+  text-align: left !important;
+  width:30%;
+  display: inline-block;
+}
+.inline{
+  display:inline-block;
+  margin:0px;
+  padding:20px !important;
+  width:100%;
+  font-size:1.5em;
+}
+
+#mainbody > form > div > label{
+  margin-bottom:1%;
+}
+
+#mainbody{
+    background: #01579b;
+    padding: 5% 0% 0% 60%;
+    margin: -3% -60%;
+}
+
+/*Dashboard*/
+.row{
+  margin-top:2%;
+  margin-bottom:10%;
+  background:white;
+  color:#01579b;
+  padding:2%;
+  border-radius:10px;
+}
+.split{
+  border-top: solid 1px silver;
+  padding-top: 5%;
+}
+body > div > div > div > div.text-right > input{
+  width:40%;
+  margin-bottom:2%;
+}
+body{
+  margin-top:-5%;;
+}
+.text-right{
+  display:inline;
+}
+.text-right input{
+  margin-left:29%;
+  width:30%;
+}
+
+#addnew > form > div:nth-child(3) > textarea{
+    overflow: scroll;
+    resize: none;
+}
+#dashboard h3{
+  display:inline-block;
+  width:40%;
+  color:black;
+  font-weight:600 !important;
+  margin-bottom:5%:
+}
+.inverselogo{
+  color:#01579b;
+}
+.new{
+  width:80%;
+}
+.btn-success{
+  width:30% !important;
+  float:right;
+  margin-right:3%;
+}
+
+/*Topic Details Page*/
+
+.topic{
+    padding:2% 3% 5% 3%;
+    margin-top:2%;
+    background:aliceblue;
+}
+#topicdetail h1{
+  font-size: 2em;
+}
+#topicdetail h3{
+  margin:0px;
+}
+#topicdetail .row{
+  color:black;
+  background:none;
+}
+.original{
+  background:white;
+  color:black;
+  padding:1.5%;
+  border-radius: 10px;
+}
+#topicdetail h5{
+  vertical-align: top;
+}
+#topicdetail .row{
+  margin-top:0px !important;
+  margin-bottom:0px !important;
+}
+#topicdetail .control-label{
+  width:35%;
+  margin-left:29%;
+  font-size:1.2em;
+}
+#topicdetail .btn-success{
+  display: block;
+  margin: 0px;
+  height: 50px;
+  margin-top:2%;
+}
+#topicdetail textarea{
+  width: 70%;
+  float:right;
+  padding:1%;
+  margin-left: 10%;
+  display: block;
+  overflow:scroll;
+  resize: none;
+}
+hr{
+  color:silver;
+}
+
+#comments{
+    margin-left:5%:
+}
+
+#date{
+    display: inline;
+    font-style:italic;
+}
+
+#commentpost > div > div > label{
+    margin-left:29% !important;
+
+}
+
+.userpost{
+    background:aliceblue;
+    padding:3%;
+}
+
+.comments{
+    margin-left:10%;
+    margin-bottom:2%;
+    background:whitesmoke;
+    padding:2%;
+}
+
+.comments h4{
+    margin-left:5%;
+}
+
+#posts{
+    margin:1% !important;
+}
+
+#commentlink{
+    float:right;
+}
+.show {
+    display: block;
+}
+
+.hide{
+    display:none;
+}
+/*User profile page*/
+#userprofile{
+    height:900px;
+}
+#activity{
+  color:black;
+  padding:2%;
+}
+
+#usersummary{
+  width:60%;
+  margin-left: 5%;
+}

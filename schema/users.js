@@ -10,5 +10,6 @@ var UserSchema=new mongoose.Schema({
     address:String,
     course:[String],
     schedule: { type : Array , "default" : [] }
+
 });
 module.exports=mongoose.model("user",UserSchema);

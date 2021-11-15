@@ -1,0 +1,29 @@
+<div id="userprofile" ng-controller="userProfileController">
+	<h2><span class="blue" ng-bind="user.name"></span>'s PROFILE</h2>
+	<h4><a class="blue" href="#/dashboard">DASHBOARD</a><a class="navigation" href="#/">|  LOGOUT</a></h4><br>
+
+	<div id="usersummary">
+		<h3>User Activity</h3>
+		<div id="activity">
+			<hr id="posts">
+			<!--User's Topics-->
+			<h4><span ng-bind="user.topics.length"></span> Topics</h4>
+				<table class="table table-hover">
+					<tbody>
+					<tr ng-repeat="topic in user.topics | orderBy: created_at: reverse">
+					<td><a href="#/topic/{{topic._id}}">{{topic.title}}</a></td></tr>
+					<tbody>
+				</table>
+
+			<!--User's Posts-->
+			<h4><span ng-bind="user.posts.length"></span> Answer Posts</h4>
+				<table class="table table-hover">
+					<tbody>
+						<tr ng-repeat="post in user.posts| orderBy: created_at: reverse">
+							<td><a href="#/topic/{{post.topic_id}}">{{post.post}}</a></td>
+						</tr>
+					<tbody>
+				</table>
+		</div><!--end activity div-->
+	</div><!--end user summary div-->
+</div>

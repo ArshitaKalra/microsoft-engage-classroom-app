@@ -7,10 +7,21 @@ var multer = require("multer");
 var bodyparser = require("body-parser");
 
 
-var { db } = require("./mongo")
+var { db } = require("./config/mongoose")
 var usersCol = require("./schema/users")
 var teacherCol= require("./schema/teacher")
 var courseCol= require("./schema/courses")
+// var topicCol= require("./schema/topic")
+// var postCol= require("./schema/post")
+// var commentCol= require("./schema/comment")
+  
+// var post = require('./controllers/post.js');
+// var topic = require('./controllers/topic.js');
+// var user = require('./controllers/user.js');
+// var comment = require('./controllers/comment.js');
+// var discussion = require('./index');
+// app.use(discussion)
+app.set('views', [__dirname + '/views', __dirname + '/client/views']);
 app.set('view engine', 'ejs'); //'html'
 // app.engine('html', require('ejs').renderFile);
 
@@ -24,6 +35,7 @@ app.use(session({
 }));
 
 app.use(express.static(__dirname+'/public'))
+app.use(express.static(path.join(__dirname, '/client')));
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'public/uploads');         ///////////////////////////////////////////////////////////////////
@@ -56,6 +68,7 @@ app.use(bodyparser.urlencoded({
     "extended": true
 }));
 
+app.use(bodyparser.json());
 
 app.use((req, res, next) => {
     const {
@@ -611,6 +624,7 @@ app.get('/course-offered', (req, res) => {
         user: res.locals.user
     });      
 });
+
 app.get('/course-enrolled', (req, res) => {   
     var coursesEnrolled=res.locals.user.course;
     var courseEnrolledDetails=[];
@@ -655,9 +669,9 @@ app.get('/dashboard-stud', (req, res) => {
 app.get('/courses-enrolled', (req, res) => {        
          
 });
-app.get('/discussion-forum', (req, res) => {        
-    res.sendFile('public/discussion-forum.html', {root: __dirname});      
-});
+// app.get('/discussion-forum', (req, res) => {        
+//     res.sendFile('public/discussion-forum.html', {root: __dirname});      
+// });
 app.get('/report', (req, res) => {        
     res.sendFile('public/report.html', {root: __dirname});      
 });
@@ -666,6 +680,29 @@ app.get('/calendar', (req, res) => {
     res.sendFile('public/calendar.html', {root: __dirname});      
 });
 
-app.listen(port, () => {            
+var server = app.listen(port, () => {            
     console.log(`Now listening on port ${port}`); 
 });
+
+// app.use(express.static(path.join(__dirname, './client')));
+// app.set('views', path.join(__dirname, './client/views'));
+
+const socket = require('socket.io');
+const io = socket(server);
+
+io.on("connection", function(socket){
+    console.log("made socket connection");
+    socket.on('disconnect', function() {
+        console.log("Disconnected - Socket ID: ", socket.id);
+    })
+    socket.on('created_topic', function(data) {
+        socket.broadcast.emit('topic_added', data);
+    })
+});
+require("./config/routes.js")(app);
+/*
+app.get('/discussion-forum', (req, res) => {        
+    res.render("index1", {
+        user: res.locals.user
+    });      
+});*/
