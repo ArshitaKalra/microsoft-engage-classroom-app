@@ -9,6 +9,7 @@ var CourseSchema=new mongoose.Schema({
     cap:Number,
     meetlink:String,
     schedule: [String],
-    classes:Number
+    classes:Number,
+    offlineSeats:Number
 });
 module.exports=mongoose.model("course",CourseSchema);

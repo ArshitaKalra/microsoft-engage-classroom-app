@@ -1,0 +1,29 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<div>
+    <h1>Course Page</h1>
+</div>
+<hr>
+<div>
+    <h2>Course </h2>
+<% if(course!=null) {  %>
+    <div> This is a single course page
+    <h1> Course : <%=course.name%></h1>
+    <h2>Course Code : <%=course.code%></h2>
+    <h2>Cap for course is: <%=course.cap%></h2>
+    <!-- <h2>Offline Seats Available: <%=course.offlineSeats%> </h2> -->
+    <form method="POST" action="/tsinglecoursepage" class="form-group">
+        <label>Available Offline Seats</label>
+        <input class="form-control" id="offlineSeats" name="offlineSeats" type="number" value="<%=course.offlineSeats%>" placeholder="<%=course.cap%>"> 
+        <!-- <button class="btn btn-success" type="submit">Enter Value</button> -->
+        <input type="submit" value="enter">
+    </form>
+    <h2>Meetlink: <%=course.meetlink%></h2>
+    <% } %> </div>
+</div>
+<div>
+    Number of students for Next offline class
+</div>
+<script>
+
+</script>

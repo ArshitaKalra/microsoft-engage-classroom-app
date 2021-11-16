@@ -11,16 +11,7 @@ var { db } = require("./config/mongoose")
 var usersCol = require("./schema/users")
 var teacherCol= require("./schema/teacher")
 var courseCol= require("./schema/courses")
-// var topicCol= require("./schema/topic")
-// var postCol= require("./schema/post")
-// var commentCol= require("./schema/comment")
-  
-// var post = require('./controllers/post.js');
-// var topic = require('./controllers/topic.js');
-// var user = require('./controllers/user.js');
-// var comment = require('./controllers/comment.js');
-// var discussion = require('./index');
-// app.use(discussion)
+
 app.set('views', [__dirname + '/views', __dirname + '/client/views']);
 app.set('view engine', 'ejs'); //'html'
 // app.engine('html', require('ejs').renderFile);
@@ -38,7 +29,7 @@ app.use(express.static(__dirname+'/public'))
 app.use(express.static(path.join(__dirname, '/client')));
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/uploads');         ///////////////////////////////////////////////////////////////////
+        cb(null, 'public/uploads');         
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + "-" + file.originalname);
@@ -620,9 +611,32 @@ app.get('/enroll',(req,res)=>{
 
 })
 app.get('/course-offered', (req, res) => {        
-    res.render("course-offered", {
-        user: res.locals.user
-    });      
+    var coursesOffered=res.locals.user.courseoffered;
+    var courseOfferedDetails=[];
+    courseCol.find({}, function (err, courses){
+        if (err) {
+            console.log(err);
+        } else {
+            coursesOffered.forEach((item)=>{
+                courseOfferedDetails.push(courses.find(coursedetail => coursedetail.code==item))
+  
+            })
+
+            res.render("course-offered",{
+                courses:courseOfferedDetails
+            })
+            
+        }
+    });   
+});
+
+app.post('/tsinglecoursepage', (req,res)=> {
+    var query = {code: req.body.code};
+    var data = {offlineSeats : req.body.offlineSeats};
+    courseCol.updateOne(query, data, (err, res)=>{
+        if(err) throw err;
+        console.log('updated');
+    })
 });
 
 app.get('/course-enrolled', (req, res) => {   
@@ -663,29 +677,26 @@ app.get('/singlecoursepage',(req,res)=>{
     });
 })
 
-app.get('/dashboard-stud', (req, res) => {        
-    res.sendFile('public/dashboard-stud.html', {root: __dirname});      
-});
-app.get('/courses-enrolled', (req, res) => {        
-         
-});
-// app.get('/discussion-forum', (req, res) => {        
-//     res.sendFile('public/discussion-forum.html', {root: __dirname});      
-// });
-app.get('/report', (req, res) => {        
-    res.sendFile('public/report.html', {root: __dirname});      
-});
+app.get('/tsinglecoursepage',(req,res)=>{
 
-app.get('/calendar', (req, res) => {        
-    res.sendFile('public/calendar.html', {root: __dirname});      
-});
+    const code=req.query.code;
+    courseCol.find({code: code}, function (err, course){
+        if (err) {
+            console.log(err);
+        } else {
+        
+           
+            res.render("tsinglecoursepage",{
+                course:course[0]
+            })
+            
+        }
+    });
+})
 
 var server = app.listen(port, () => {            
     console.log(`Now listening on port ${port}`); 
 });
-
-// app.use(express.static(path.join(__dirname, './client')));
-// app.set('views', path.join(__dirname, './client/views'));
 
 const socket = require('socket.io');
 const io = socket(server);
@@ -700,9 +711,3 @@ io.on("connection", function(socket){
     })
 });
 require("./config/routes.js")(app);
-/*
-app.get('/discussion-forum', (req, res) => {        
-    res.render("index1", {
-        user: res.locals.user
-    });      
-});*/

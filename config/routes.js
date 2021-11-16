@@ -5,12 +5,12 @@ var comment = require('./../server/controllers/comment.js');
 
 module.exports = function(app) {
     app.get('/discussion-forum', function(req, res) {
-       console.log(1)
+    //    console.log(1)
         res.render('index1');
     });
 
     app.get('/user', function(req, res) {
-        console.log(2)
+        // console.log(2)
         user.read(req, res);
     });
 
