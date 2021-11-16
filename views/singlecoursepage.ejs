@@ -1,3 +1,4 @@
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div>
@@ -11,8 +12,24 @@
     <h1> <%=course.name%></h1>
     <%=course.code%>
     <%=course.instructor%>
+    Available Seats : <%=course.offlineSeats - course.bookedSeats%>
+    <%if(course.offlineSeats-course.bookedSeats)  { %>
+    <input type="button" value="Yes" onclick='bookSeat("<%=course.code%>")'>  
+    <% }
+    else{ %>
+        <input type="button" value="Yes"  disabled>
+        <% }%>
     <% } %> </div>
 </div>
-<script>
 
+<script>
+    function bookSeat(code){
+$.get(
+    "bookseat",
+    {code : code},
+    function(data) {
+       alert(data);
+    }
+);
+}
 </script>

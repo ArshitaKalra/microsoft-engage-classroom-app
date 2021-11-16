@@ -676,7 +676,32 @@ app.get('/singlecoursepage',(req,res)=>{
         }
     });
 })
+app.get('/bookseat',(req,res)=>{
+    courseCol.findOneAndUpdate({
+        code: req.query.code
+    }, {
+        $push: {
+            course:  req.session.userid,
 
+        },
+        $inc:{
+            bookedSeats: 1
+         }
+
+    },
+   
+    
+    {
+        new: true
+    }).then((docs) => {
+        if (docs) {
+            res.send("Seat Booked");
+           // res.redirect("profile");
+        } else {
+            res.send("Error Occured");
+        }
+    })
+})
 app.get('/tsinglecoursepage',(req,res)=>{
 
     const code=req.query.code;
