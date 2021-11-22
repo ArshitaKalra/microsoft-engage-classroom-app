@@ -1,4 +1,3 @@
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div>
@@ -7,29 +6,59 @@
 <hr>
 <div>
     <h2>Course </h2>
-<% if(course!=null) {  %>
-    <div> This is a single course page
-    <h1> <%=course.name%></h1>
-    <%=course.code%>
-    <%=course.instructor%>
-    Available Seats : <%=course.offlineSeats - course.bookedSeats%>
-    <%if(course.offlineSeats-course.bookedSeats)  { %>
-    <input type="button" value="Yes" onclick='bookSeat("<%=course.code%>")'>  
-    <% }
-    else{ %>
-        <input type="button" value="Yes"  disabled>
-        <% }%>
-    <% } %> </div>
+    <% if(course!=null) { %>
+        <div> This is a single course page
+            <h1>
+                <%=course.name%>
+            </h1>
+            <p>Code &emsp;&emsp;&emsp;&emsp;&emsp;: <%=course.code%>
+            </p>
+            <p>Instructor &emsp;&emsp;&emsp; : <%=course.instructor%>
+            </p>
+            <p>Available Seats &emsp;: <%=course.offlineSeats - course.bookedSeats%>
+            </p>
+            <br>
+            In which mode would you take the class?<br>
+            <!-- <label>Offline</label><input type="checkbox" value="offline" id="offline-class"><br> -->
+            <!-- <label>Online</label><input type="checkbox" value="online" id="online-class"><br> -->
+            <%if(course.offlineSeats-course.bookedSeats) { %>
+                <label style="color: brown;">Offline</label>
+                <input type="checkbox" value="Offline" id="acknowledgement"><br>
+                <div id="covid-acknowlegde" style="display: none;">
+                    <h4>You must check the box below to attest that the following information is true and accurate:
+                    </h4>
+                    <p>I am fully vaccinated and have received the policies and procedures related to appropriate PPE
+                        utilization and wearing of face coverings while at university and agree to abide by them.</p>
+                    <label style="color: darkgreen;">I agree</label><input type="checkbox" value="I agree" onclick='bookSeat("<%=course.code%>")'><br>
+                </div>
+                <% } else{ %>
+                    <label style="color: brown;">Offline</label><input type="checkbox" value="Offline" disabled>
+                    <% }%>
+                        <% } %>
+                            <br><label style="color: brown;">Online</label>
+                            <input type="checkbox" value="Online" id="class-meetlink">
+                            <div id="onlinecheck" style="display:none">
+                                <br>Meetlink for online class of <%=course.name%> is : <p style="color: blue;">
+                                        <%=course.meetlink%>
+                                    </p>
+                            </div>
+        </div>
 </div>
 
 <script>
-    function bookSeat(code){
-$.get(
-    "bookseat",
-    {code : code},
-    function(data) {
-       alert(data);
+    function bookSeat(code) {
+        $.get(
+            "bookseat",
+            { code: code },
+            function (data) {
+                alert(data);
+            }
+        );
     }
-);
-}
+    $('#acknowledgement').change(function () {
+        $('#covid-acknowlegde').toggle();
+    });
+    $('#class-meetlink').change(function () {
+        $('#onlinecheck').toggle();
+    });
 </script>

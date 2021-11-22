@@ -12,18 +12,31 @@
     <h2>Course Code : <%=course.code%></h2>
     <h2>Cap for course is: <%=course.cap%></h2>
     <!-- <h2>Offline Seats Available: <%=course.offlineSeats%> </h2> -->
-    <form method="POST" action="/tsinglecoursepage" class="form-group">
-        <label>Available Offline Seats</label>
-        <input class="form-control" id="offlineSeats" name="offlineSeats" type="number" value="<%=course.offlineSeats%>" placeholder="<%=course.cap%>"> 
+    <form method="get" action="/updateseat" >
+        <label>Available Offline Seats for</label>
+        <input name="course" type="text" value="<%=course.code%>" placeholder="<%=course.code%>"> 
+        <input name="offlineSeats" type="number" value="<%=course.offlineSeats%>" placeholder="<%=course.cap%>"> 
         <!-- <button class="btn btn-success" type="submit">Enter Value</button> -->
-        <input type="submit" value="enter">
+        <!-- <button type="reset">Reset</button> -->
+        <input type="submit" value="submit"/>
     </form>
     <h2>Meetlink: <%=course.meetlink%></h2>
     <% } %> </div>
 </div>
 <div>
-    Number of students for Next offline class
+    Number of students for Next offline class : <%=course.bookedSeats%>
 </div>
+Students attending offline classes are :
+<% if(course.offlineStud!=null) { %>
+    <!-- <%=course.offlineStud.length%> -->
+    <table>
+        <% for(var i=0; i < course.offlineStud.length; i++) { %>
+           <tr>
+             <td><%= course.offlineStud[i]%></td>
+           </tr>
+        <% } %>
+        </table>
+    <% } %> 
 <script>
 
 </script>

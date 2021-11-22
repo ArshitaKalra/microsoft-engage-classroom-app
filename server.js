@@ -537,6 +537,7 @@ app.get('/allcourses', (req, res) => {
 
 
 app.get('/enroll',(req,res)=>{
+    // console.log(req.session.userid)
     const code=req.query.code;
     var start,classes,schedule,name;
     Date.prototype.addDays = function(days) {
@@ -549,6 +550,7 @@ app.get('/enroll',(req,res)=>{
     }, {
         $push: {
             enrolledstud: req.session.userid,
+            offlineStud : req.session.userid,
            
         }
     }, {
@@ -630,13 +632,28 @@ app.get('/course-offered', (req, res) => {
     });   
 });
 
-app.post('/tsinglecoursepage', (req,res)=> {
-    var query = {code: req.body.code};
-    var data = {offlineSeats : req.body.offlineSeats};
-    courseCol.updateOne(query, data, (err, res)=>{
-        if(err) throw err;
-        console.log('updated');
+app.get('/updateseat', (req,res)=> {
+    var seats = req.query.offlineSeats;
+    var code = req.query.course;
+    courseCol.findOneAndUpdate({
+        code: code
+    }, {
+        $set:{
+            offlineSeats: seats
+         }
+
+    },
+    {
+        new: true,
+        upsert:true
+    }).then((docs) => {
+        if (docs) {
+            // res.send("Updated");
+        } else {
+            res.send("Error Occured");
+        }
     })
+
 });
 
 app.get('/course-enrolled', (req, res) => {   
@@ -682,10 +699,12 @@ app.get('/bookseat',(req,res)=>{
     }, {
         $push: {
             course:  req.session.userid,
+            // offlineStud: req.session.userid,
 
         },
         $inc:{
             bookedSeats: 1
+            // offlineSeats: -1
          }
 
     },
