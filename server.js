@@ -246,6 +246,7 @@ app.post('/login', redirectHome, (req, res) => {
                 if (result) {
                     req.session.userid = email;
                     req.session.occupation=0;
+                    req.session.name=result.name;
                     res.redirect('/home')
                 } else
                     return res.redirect('/login');
@@ -550,7 +551,10 @@ app.get('/enroll',(req,res)=>{
     }, {
         $push: {
             enrolledstud: req.session.userid,
-            offlineStud : req.session.userid,
+            offlineStud : {
+                email:req.session.userid,
+                name:req.session.name
+            }
            
         }
     }, {
@@ -605,12 +609,20 @@ app.get('/enroll',(req,res)=>{
             res.send("Error Occured");
         }
     })
-    
+})
 
+app.get('/remove',(req,res)=>{
     
-
-    
-
+    courseCol.findOneAndUpdate({
+        code:req.query.code
+    },
+    {$pull:{
+        offlineStud:{email:req.body.email}
+    }
+    }
+    ).then((docs)=>{
+        res.send("Deleted");
+    })
 })
 app.get('/course-offered', (req, res) => {        
     var coursesOffered=res.locals.user.courseoffered;

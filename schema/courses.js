@@ -12,6 +12,6 @@ var CourseSchema=new mongoose.Schema({
     classes:Number,
     offlineSeats:Number,
     bookedSeats:Number,
-    offlineStud:[String]
+    offlineStud: { type : Array , "default" : [] }
 });
 module.exports=mongoose.model("course",CourseSchema);
