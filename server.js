@@ -4,13 +4,21 @@ const app = express();
 const port = 8000;                  
 var session = require("express-session");
 var multer = require("multer");
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+
 var bodyparser = require("body-parser");
+const fileUpload = require('express-fileupload');
+const fs = require('fs');
 
 
 var { db } = require("./config/mongoose")
 var usersCol = require("./schema/users")
 var teacherCol= require("./schema/teacher")
 var courseCol= require("./schema/courses")
+// var assignmentCol = require("./schema/assignment")
+// var submissionCol = require("./schema/submission")
+var Binary = require("./config/mongoose").Binary;
 
 app.set('views', [__dirname + '/views', __dirname + '/client/views']);
 app.set('view engine', 'ejs'); //'html'
@@ -617,7 +625,21 @@ app.get('/remove',(req,res)=>{
         code:req.query.code
     },
     {$pull:{
-        offlineStud:{email:req.body.email}
+        offlineStud:{email:req.query.email}
+    }
+    }
+    ).then((docs)=>{
+        res.send("Deleted");
+    })
+})
+
+app.get('/unbookSeat',(req,res)=>{
+    
+    courseCol.findOneAndUpdate({
+        code:req.query.code
+    },
+    {$pull:{
+        offlineStud:{email:req.session.userid}
     }
     }
     ).then((docs)=>{
@@ -667,6 +689,56 @@ app.get('/updateseat', (req,res)=> {
     })
 
 });
+
+app.post('/addAssign', upload.single("uploadFile"), (req,res)=> {
+    var code = req.body.forCourse;
+    var title = req.body.assignTitle;
+    var description = req.body.description;
+    var deadline = req.body.deadline;
+    const url='/tsinglecoursepage?code='+code;
+    var filename = req.file.filename;
+    courseCol.findOneAndUpdate({
+        code: code
+    },{
+        $push:{
+            assignment:{
+            title:title,
+            description:description,
+            deadline:deadline,
+            file:filename
+            }
+        }
+    }).then((docs) => {
+        if (docs) {
+            res.redirect(url);
+        } else {
+            res.send("Error Occured");
+        }
+    })
+});
+
+app.post('/submitAssign', upload.single("submission"), (req,res)=>{
+    console.log(req.body)
+    var filename = req.file.filename;
+    const url='/singlecoursepage?code='+req.body.scourse;
+    courseCol.findOneAndUpdate({
+        code: req.body.scourse,
+        "assignment.title": req.body.assignCode
+    },{
+        $push:{
+            "assignment.$.submission":{
+                name:req.session.name,
+                filename:filename
+            }
+        }
+    }).then((docs) => {
+        if (docs) {
+            res.redirect(url);
+        } else {
+            res.send("Error Occured");
+        }
+    })
+})
 
 app.get('/course-enrolled', (req, res) => {   
     var coursesEnrolled=res.locals.user.course;
