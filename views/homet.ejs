@@ -44,14 +44,15 @@
       </div>
   </center>
   <h4>
-    <div class="col-md-5 offset-md-2 row">
-      <div> NAME : </div>
-      <div id="name " class="offset-md-1"> <%=user.name%></div>
-    </div>
-    <div class="col-md-5 offset-md-2 row">
-      <div> EMAIL : </div>
-      <div id="email " class="offset-md-1"> <%=user.email%></div>
-  </h4>
+    <div class="form-row">
+      <div class="col-md-4 offset-md-2 ">
+        <div> NAME : </div>
+        <div id="name " > <%=user.name%></div><br>
+        <div> EMAIL : </div>
+        <div id="email " > <%=user.email%></div>
+      </div>
+      
+      <img src="uploads/<%=user.pic%>" width="100" height="100">  </h4>
   </div> <br><br>
 
   
