@@ -10,67 +10,116 @@
 <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <body>
-<div>
-    <h1>Course Page</h1>
-</div>
-<hr>
-<div>
-    <h2>Course </h2>
-    <% if(course!=null) { %>
-        <div> This is a single course page
-            <h1>
-                <%=course.name%>
-            </h1>
-            <p>Code &emsp;&emsp;&emsp;&emsp;&emsp;: <%=course.code%>
-            </p>
-            <p>Instructor &emsp;&emsp;&emsp; : <%=course.instructor%>
-            </p>
-            <p>Available Seats &emsp;: <%=course.offlineSeats - course.bookedSeats%>
-            </p>
-            <br>
-            In which mode would you take the class?<br>
-            <!-- <label>Offline</label><input type="checkbox" value="offline" id="offline-class"><br> -->
-            <!-- <label>Online</label><input type="checkbox" value="online" id="online-class"><br> -->
-            <%if(course.offlineSeats-course.bookedSeats) { %>
+    <div style="text-align: center;">
+        <h1>Course Page</h1>
+    </div>
+    <hr>
+    <div style="margin-left: 50px;">
+        <h2>Course </h2>
+        <% if(course!=null) { %>
+            <div> This is a single course page
+                <h1>
+                    <%=course.name%>
+                </h1>
+                <p>Code &emsp;&emsp;&emsp;&emsp;&emsp;: <%=course.code%>
+                </p>
+                <p>Instructor &emsp;&emsp;&emsp; : <%=course.instructor%>
+                </p>
+                <br>
                 <label style="color: brown;">Offline</label>
-                <input type="checkbox" value="Offline" id="acknowledgement"><br>
-                <div id="covid-acknowlegde" style="display: none;">
-                    <h4>You must check the box below to attest that the following information is true and accurate:
-                    </h4>
-                    <p>I am fully vaccinated and have received the policies and procedures related to appropriate PPE
-                        utilization and wearing of face coverings while at university and agree to abide by them.</p>
-                    <label style="color: darkgreen;">I agree</label><input type="checkbox" value="I agree" onclick='bookSeat("<%=course.code%>")'><br>
+                <div id="covid-acknowlegde">
+                    <p>Click below if you want to opt out from attending offline class.</p>
+                    <label style="color: blue;">Opt out</label><input type="checkbox" value="Opt out"
+                        onclick='unbookSeat("<%=course.code%>")'><br>
                 </div>
-                <% } else{ %>
-                    <label style="color: brown;">Offline</label><input type="checkbox" value="Offline" disabled>
-                    <% }%>
-                        <% } %>
-                            <br><label style="color: brown;">Online</label>
-                            <input type="checkbox" value="Online" id="class-meetlink">
-                            <div id="onlinecheck" style="display:none">
-                                <br>Meetlink for online class of <%=course.name%> is : <p style="color: blue;">
-                                        <%=course.meetlink%>
-                                    </p>
-                            </div>
-        </div>
-</div>
+                <% } %>
+                    <br><label style="color: brown;">Online</label>
+                    <div id="onlinecheck">
+                        <br>Meetlink for online class of <%=course.name%> is : <p style="color: blue;">
+                                <%=course.meetlink%>
+                            </p>
+                    </div>
+            </div>
+    </div>
+
+    <div style="margin-left: 50px;">
+        <h3>Assignments for you!</h3>
+        <table id="submitAssign" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Question Paper</th>
+                    <th>Select Submission</th>
+                    <th>Add submission</th>
+                    <th>Your submission</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% course.assignment.forEach(function(item){%>
+                    <tr>
+                        <td>
+                            <%= item.title%>
+                        </td>
+                        <td>
+                            <%= item.description%>
+                        </td>
+                        <td>
+                            <%= item.deadline%>
+                        </td>
+                        <td>
+                            <a href='uploads/<%=item.file%>'>Show file</a>
+                            <!-- file -->
+                        </td>
+                        <td>
+                            <!-- submission -->
+                            <form method="post" action="/submitAssign" enctype="multipart/form-data">
+                                <input type="text" name="scourse" value="<%=course.code%>"
+                                    placeholder="<%=course.code%>" hidden>
+                                <input type="text" name="assignCode" value="<%=item.title%>"
+                                    placeholder="<%=item.title%>" hidden>
+                                <!-- <input type="file" name="submission" value="submit"> -->
+                                <input type="file" name="submission" placeholder="submissionlink" id="<%=item.title%>" required>
+                        </td>
+                        <td>
+                            <input type="submit" value="turn in">
+
+                        </td>
+                        <td>
+                            <% if(item.submission){item.submission.forEach(function(val){
+                                if(val.name==user.name){%>
+                                    <script>document.getElementById("<%=item.title%>").disabled = true;</script>
+                                    <a href="uploads/<%=val.filename%>" target="_blank">submission</a>
+                                <%}
+                            })}%>
+                        </td>
+                        <td>
+                            A
+                        </td>
+                        </form>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
 </body>
 <script>
-    function bookSeat(code) {
+    function unbookSeat(code) {
         $.get(
-            "bookseat",
-            
+            "unbookseat",
             { code: code },
             function (data) {
                 alert(data);
             }
         );
     }
-    
-    $('#acknowledgement').change(function () {
-        $('#covid-acknowlegde').toggle();
-    });
-    $('#class-meetlink').change(function () {
-        $('#onlinecheck').toggle();
-    });
+
+    // $('#acknowledgement').change(function () {
+    //     $('#covid-acknowlegde').toggle();
+    // });
+    // $('#class-meetlink').change(function () {
+    //     $('#onlinecheck').toggle();
+    // });
 </script>
