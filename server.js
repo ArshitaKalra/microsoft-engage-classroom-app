@@ -531,6 +531,7 @@ app.get('/phonebook', (req, res) => {
         }
     });
 });
+
 app.get('/allcourses', (req, res) => {        
     courseCol.find({}, function (err, courses){
         if (err) {
@@ -817,6 +818,23 @@ app.get('/tsinglecoursepage',(req,res)=>{
         
            
             res.render("tsinglecoursepage",{
+                course:course[0]
+            })
+            
+        }
+    });
+});
+
+app.get('/viewsubmission', (req,res)=>{
+    const code=req.query.code;
+    // console.log(code);
+    courseCol.find({code: code}, function (err, course){
+        if (err) {
+            console.log(err);
+        } else {
+        
+           
+            res.render("viewsubmission",{
                 course:course[0]
             })
             
