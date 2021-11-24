@@ -50,9 +50,11 @@
                     <th>Title</th>
                     <th>Description</th>
                     <th>Due Date</th>
-                    <th>Question File</th>
-                    <th>Add Submission</th>
+                    <th>Question Paper</th>
+                    <th>Select Submission</th>
+                    <th>Add submission</th>
                     <th>Your submission</th>
+                    <th>Grade</th>
                 </tr>
             </thead>
             <tbody>
@@ -75,17 +77,28 @@
                             <!-- submission -->
                             <form method="post" action="/submitAssign" enctype="multipart/form-data">
                                 <input type="text" name="scourse" value="<%=course.code%>"
-                                    placeholder="<%=course.code%>">
+                                    placeholder="<%=course.code%>" hidden>
                                 <input type="text" name="assignCode" value="<%=item.title%>"
-                                    placeholder="<%=item.title%>">
+                                    placeholder="<%=item.title%>" hidden>
                                 <!-- <input type="file" name="submission" value="submit"> -->
-                                <input type="file" name="submission" placeholder="submissionlink" required>
+                                <input type="file" name="submission" placeholder="submissionlink" id="<%=item.title%>" required>
                         </td>
                         <td>
                             <input type="submit" value="turn in">
-                            
+
                         </td>
-                    </form>
+                        <td>
+                            <% if(item.submission){item.submission.forEach(function(val){
+                                if(val.name==user.name){%>
+                                    <script>document.getElementById("<%=item.title%>").disabled = true;</script>
+                                    <a href="uploads/<%=val.filename%>" target="_blank">submission</a>
+                                <%}
+                            })}%>
+                        </td>
+                        <td>
+                            A
+                        </td>
+                        </form>
                     </tr>
                     <% }) %>
             </tbody>

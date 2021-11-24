@@ -718,7 +718,7 @@ app.post('/addAssign', upload.single("uploadFile"), (req,res)=> {
 });
 
 app.post('/submitAssign', upload.single("submission"), (req,res)=>{
-    console.log(req.body)
+    // console.log(req.body)
     var filename = req.file.filename;
     const url='/singlecoursepage?code='+req.body.scourse;
     courseCol.findOneAndUpdate({
@@ -727,8 +727,8 @@ app.post('/submitAssign', upload.single("submission"), (req,res)=>{
     },{
         $push:{
             "assignment.$.submission":{
-                name:req.session.name,
-                filename:filename
+                "name":req.session.name,
+                "filename":filename
             }
         }
     }).then((docs) => {
@@ -764,6 +764,7 @@ app.get('/course-enrolled', (req, res) => {
 app.get('/singlecoursepage',(req,res)=>{
 
     const code=req.query.code;
+
     courseCol.find({code: code}, function (err, course){
         if (err) {
             console.log(err);
@@ -771,7 +772,8 @@ app.get('/singlecoursepage',(req,res)=>{
         
            
             res.render("singlecoursepage",{
-                course:course[0]
+                course:course[0],
+                // user:res.locals.user
             })
             
         }
