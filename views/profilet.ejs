@@ -68,7 +68,7 @@
     <div class="row ">
         <div class="col-md-10 offset-md-1 border">
             <form 
-            method="POST" enctype="multipart/form-data" action="profile">
+            method="POST" enctype="multipart/form-data" action="profilet">
              
             <input type="hidden" name="hdn" id="hdn" value="<%=user.pic%>">
                 <div class="form-row">
@@ -131,7 +131,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="courses">Courses</label>
-                            <input type="text"  class="form-control" name="course" id="course"  placeholder="Enter Courses" value="<%=user.course%>">
+                            <input type="text"  class="form-control" name="course" id="course"  placeholder="Enter Courses" disabled value="<%=user.courseoffered%>">
                           
                         </div>
                     </div>

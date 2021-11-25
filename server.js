@@ -217,7 +217,7 @@ app.post("/profilet", redirectLogin, upload.single('pic'), (req, res) => {
     } else {
         req.body.pic = req.body.hdn;
     }
-    usersCol.findOneAndUpdate({
+    teacherCol.findOneAndUpdate({
         email: req.body.email
     }, {
         $set: {
