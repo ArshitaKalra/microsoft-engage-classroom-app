@@ -81,24 +81,28 @@
                                 <input type="text" name="assignCode" value="<%=item.title%>"
                                     placeholder="<%=item.title%>" hidden>
                                 <!-- <input type="file" name="submission" value="submit"> -->
-                                <input type="file" name="submission" placeholder="submissionlink" id="<%=item.title%>" required>
+                                <input type="file" name="submission" placeholder="submissionlink" id="<%=item.title%>"
+                                    required>
                         </td>
                         <td>
                             <input type="submit" value="turn in">
 
                         </td>
                         <td>
-                            <% if(item.submission){item.submission.forEach(function(val){
-                                if(val.name==user.name){%>
-                                    <script>document.getElementById("<%=item.title%>").disabled = true;</script>
-                                    <a href="uploads/<%=val.filename%>" target="_blank">submission</a>
-                                <%}
-                            })}%>
+                            <% if(item.submission){item.submission.forEach(function(val){ if(val.name==user.name){%>
+                                <script>document.getElementById("<%=item.title%>").disabled = true;</script>
+                                <a href="uploads/<%=val.filename%>" target="_blank">submission</a>
                         </td>
                         <td>
-                            A
+                            <%if(val.grade){%>
+                                <%=val.grade%>
+                            <%} else{%>
+                                <%="--"%>
+                            <%}%>
                         </td>
-                        </form>
+                        <%} })}%>
+
+                            </form>
                     </tr>
                     <% }) %>
             </tbody>

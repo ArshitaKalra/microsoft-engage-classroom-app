@@ -842,6 +842,40 @@ app.get('/viewsubmission', (req,res)=>{
     });
 })
 
+app.post('/assignGrade', (req,res)=>{
+    var code = req.body.course;
+    var title = req.body.assignment;
+    var student = req.body.student;
+    var grade = req.body.grade;
+    var filename = req.body.file;
+    const url='/viewsubmission?code='+req.body.course;
+    courseCol.findOneAndUpdate({
+        code:code,
+        "assignment.title":title,
+        "assignment.submission.name":student,
+    },{
+        $set:{
+            "assignment.$[elem].submission.$":{
+                "name":student,
+                "filename":filename,
+                "grade":grade
+            }
+        }
+    },
+    {
+        arrayFilters: [
+          { "elem.title": title }
+        ]
+      }).then((docs) => {
+        if (docs) {
+            res.redirect(url);
+            // res.send("graded");
+        } else {
+            res.send("Error Occured");
+        }
+    })
+})
+
 var server = app.listen(port, () => {            
     console.log(`Now listening on port ${port}`); 
 });

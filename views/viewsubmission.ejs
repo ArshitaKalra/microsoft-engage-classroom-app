@@ -29,6 +29,9 @@
                         <th>
                             File Submitted :
                         </th>
+                        <th>
+                            Assign Grade :
+                        </th>
                     </tr>
                 </thead>
                 <%if(item.submission){item.submission.forEach(function(val){%>
@@ -39,6 +42,16 @@
                             </td>
                             <td>
                                 <a href="uploads/<%=val.filename%>" target="_blank">check submission</a>
+                            </td>
+                            <td>
+                                <form method="post" action="/assignGrade">
+                                    <input name="course" type="text" value="<%=course.code%>" placeholder="<%=course.code%>" hidden>
+                                    <input name="assignment" type="text" value="<%=item.title%>" placeholder="<%=item.title%>" hidden>
+                                    <input name="student" type="text" value="<%=val.name%>" placeholder="<%=val.name%>" hidden>
+                                    <input name="file" type="text" value="<%=val.filename%>" placeholder="<%=val.filename%>" hidden>
+                                    <input name="grade" type="text" id="grade" value="<%=val.grade%>">
+                                    <input type="submit" value="submit" />
+                                </form>
                             </td>
                         </tr>
                     </tbody>
