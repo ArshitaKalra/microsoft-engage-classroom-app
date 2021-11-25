@@ -16,13 +16,17 @@
 	<!-- JS -->
 	<script >
 		var app = angular.module("app", ['ngRoute']);
-
 //Note some mixed controller assignment also found in EJS page.
 app.config(function($routeProvider) {
 	$routeProvider
 	.when('/', {
 		templateUrl: 'views/main.ejs',
-		controller: 'userController'
+		controller: 'userController',
+		resolve:{
+			user: function($route){ $route.current.params.user= "<%=user.name%>";}
+		}
+		
+		
 	})
 	.when('/dashboard', {
 		templateUrl: 'views/dashboard.ejs',
@@ -54,6 +58,7 @@ app.config(function($routeProvider) {
 	<script>
 		var socket = io.connect();
 	</script>
+	
 </head>
 
 	<!-- Begin Partial EJS views -->
