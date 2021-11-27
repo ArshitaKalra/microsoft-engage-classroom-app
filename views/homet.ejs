@@ -11,7 +11,31 @@
   <link rel="stylesheet" href="../public/css/navbar.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+    <link href='fullcalendar/main.css'  rel="stylesheet" />
+    <script src='fullcalendar/main.js'></script>
+    <script >
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        // var eventArray= JSON.stringify('<%=user.schedule%>');
+        // console.log( eventArray)
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    initialDate: '2021-11-07',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    // events: <%- JSON.stringify(user.schedule)%>
+  });
+
+        calendar.render();
+      });
+    
+      </script>
+  
+   
+  </head>
 
 <body>
 
@@ -56,9 +80,10 @@
   </div>
   </div> <br><br>
   <br> <br>
-  </a> 
+  
   </div>
   <div class="container">
+    <div class="form-row">
   <div class="announcement" style="width: 600px;">
     <div class="card" style="background-color: antiquewhite;">
       <br><h5 class="card-title" style="color: #403b87; font-weight: 600; font-size: 25px; margin-top: 2px; border-radius: 30px; margin-left: 30%;">Announcements</h5><hr>
@@ -76,9 +101,12 @@
         </div>
     </div>
   </div>
+  <div id="calendar" style="margin-left: 10%; border: solid black; border-width: 2px; background-image: url('uploads/bg-cal.jpg');"></div>
   </div>
-
-
+</div>
+ <div>
+    <br>
+  </div>
 </body>
 
 </html>
