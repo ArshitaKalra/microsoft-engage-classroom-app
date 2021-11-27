@@ -27,10 +27,10 @@
 					<tr ng-repeat="topic in topics | filter: query">
 						<td ng-bind="topic.category"></td>
 						<td>
-							<a ng-bind="topic.title" href="#/topic/{{topic._id}}"></a>
+							<a ng-bind="topic.title" href="#/topic/{{topic._id}}" style="color:#403b87; font-weight: 500;" ></a>
 						</td>
 						<td>
-							<a ng-bind="topic.name" ng-href="#/user/{{topic.user_id}}"></a>
+							<a ng-bind="topic.name" ng-href="#/user/{{topic.user_id}}"  style="color: #f7a11c;"></a>
 						</td>
 						<td ng-bind="topic.posts"></td>
 					</tr>
@@ -43,17 +43,17 @@
 			<form class="form-horizontal" role="form">
 				<h3>ADD A NEW TOPIC</h3>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Topic:</label>
+					<label class="col-sm-2 control-label" style="color:#403b87; font-weight: 500;">Topic:</label>
 					<input type="text" class="col-sm-4 new" ng-model="newTopic.title">
 				</div>
 
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Description:</label>
+					<label class="col-sm-2 control-label" style="color:#403b87; font-weight: 500;">Description:</label>
 					<textarea class="col-sm-4 new" rows="4" ng-model="newTopic.description"></textarea>
 				</div>
 
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Category:</label>
+					<label class="col-sm-2 control-label" style="color:#403b87; font-weight: 500;">Category:</label>
 					<!-- Could refactor this later into an array of topics with ng-options for easier management of topic expansion/updates-->
 					<select class="col-sm-4" ng-model="newTopic.category">
 						<option value="Arts and Culture">Arts and Culture</option>
@@ -85,7 +85,7 @@
 				</div>
 
 				<div class="form-group">
-					<button class="btn btn-success col-md-1 col-md-offset-5" ng-click="createTopic(newTopic, user)">POST TOPIC</button>
+					<button class="btn btn-success col-md-1 col-md-offset-5" style="background-color: #f7a11c;" ng-click="createTopic(newTopic, user)">POST TOPIC</button>
 				</div>
 
 			</form><!--end of add new form-->

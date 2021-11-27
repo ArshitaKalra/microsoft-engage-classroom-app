@@ -43,7 +43,7 @@
           <div class="meetL" style="width: 300px;">
             <img src="uploads/meetteams.png" style="width: 150px; height: 60px; margin-top: 2px;">
             <p style="margin-top: 3%;">MeetLink for the class : <span style="color: #f7a11c; font-weight: 600; "><%=course.meetlink%></span></p>
-            <div style=""><button class="btn btn-primary" style="background-color: #f7a11c;">JOIN</button></div>
+            <div><button class="btn btn-primary" style="background-color: #f7a11c;">JOIN</button></div>
           </div>
 
           <div class="col offL">
@@ -57,7 +57,7 @@
         </div>
         
       </div>
-    <br><br><br><br>
+    <br>
     <div class="container" style="border: solid 2px black;">
             <h3 style="color: #403b87; margin-top: 2%;">Assignments for you!</h3>
             <table id="submitAssign" class="table table-striped table-bordered">
@@ -125,35 +125,6 @@
             </table>
     </div>
     <br><br><br>
-    <!-- <div style="margin-left: 50px;"> -->
-        <!-- <h2>Course </h2>
-        <% if(course!=null) { %>
-            <div> This is a single course page
-                <h1>
-                    <%=course.name%>
-                </h1>
-                <p>Code &emsp;&emsp;&emsp;&emsp;&emsp;: <%=course.code%>
-                </p>
-                <p>Instructor &emsp;&emsp;&emsp; : <%=course.instructor%>
-                </p>
-                <br>
-                <label style="color: brown;">Offline</label>
-                <div id="covid-acknowlegde">
-                    <p>Click below if you want to opt out from attending offline class.</p>
-                    <label style="color: blue;">Opt out</label><input type="checkbox" value="Opt out"
-                        onclick='unbookSeat("<%=course.code%>")'><br>
-                </div>
-                <% } %>
-                    <br><label style="color: brown;">Online</label>
-                    <div id="onlinecheck">
-                        <br>Meetlink for online class of <%=course.name%> is : <p style="color: blue;">
-                                <%=course.meetlink%>
-                            </p>
-                    </div>
-            </div>
-    </div> -->
-
-    
 </body>
 <script>
     function unbookSeat(code) {

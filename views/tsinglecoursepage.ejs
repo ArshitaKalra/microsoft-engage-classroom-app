@@ -2,172 +2,149 @@
 <html lang="en">
 <title>MSEP</title>
 
-<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../public/css/navbar.css">
+<!-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <body>
-    <div>
-        <h1>Course Page</h1>
-    </div>
-    <hr>
-    <div>
-        <h2>Course </h2>
-        <% if(course!=null) { %>
-            <div> This is a single course page
-                <h1> Course : <%=course.name%>
-                </h1>
-                <h2>Course Code : <%=course.code%>
-                </h2>
-                <h2>Cap for course is: <%=course.cap%>
-                </h2>
-                <!-- <h2>Offline Seats Available: <%=course.offlineSeats%> </h2> -->
-                <form method="get" action="/updateseat">
-                    <label>Available Offline Seats for</label>
-                    <input name="course" type="text" value="<%=course.code%>" placeholder="<%=course.code%>">
-                    <input name="offlineSeats" type="number" value="<%=course.offlineSeats%>"
-                        placeholder="<%=course.cap%>">
-                    <!-- <button class="btn btn-success" type="submit">Enter Value</button> -->
-                    <!-- <button type="reset">Reset</button> -->
-                    <input type="submit" value="submit" />
-                </form>
-                <h2>Meetlink: <%=course.meetlink%>
-                </h2>
-                <% } %>
-            </div>
-    </div>
-    <!-- <div> -->
-    <!-- Number of students for Next offline class : <%=course.bookedSeats%> -->
-    <!-- </div> -->
-    <div style="margin-left: 50px; margin-right: 350px; margin-top: 60px;">
-        <h2>Students attending offline classes are :</h2>
-        <% if(course.offlineStud!=null) { %>
-            <!-- <%=course.offlineStud.length%> -->
-            <table id="offlinestudents" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email-ID</th>
-                        <th>Remove From Offline</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <% course.offlineStud.forEach(function(item){ %>
-                        <tr>
-                            <td>
-                                <%= item.name%>
-                            </td>
-                            <td>
-                                <%= item.email%>
-                            </td>
-                            <td>
-                                <input id="<%=item.code%>" type="button" value="Remove"
-                                    onclick='remove("<%=course.code%>","<%=item.email%>")'>
-                            </td>
-
-                        </tr>
-                        <% }) %>
-                </tbody>
-            </table>
-
-            <% } %>
-    </div>
-    <!-- create assignment -->
-    <div style="margin-left: 50px;">
-        <h3>Create new assignment</h3>
-        <input type="button" value="create-assignment" name="create-assignment" id="new-assignment"><br>
-        <div id="newassign" style="display: none; margin-left: 200px;">
+    <center>
+        <div class="container">
+          <div id="nav-placeholder">
+    
+          </div>
+          
+          <script>
+          $(function(){
+            $("#nav-placeholder").load("navbar-teacher.html");
+          });
+          </script><br><br><br>
+          <div>
+            <h1 style="color: #403b87; font-weight: 700; margin-top: 2%;"><%=course.name%>, <span style="color: #f7a11c">Teacher</span></h1>
             <br>
-            <form method="post" action="/addAssign" enctype="multipart/form-data">
-                <label>Assignment Created By :&emsp;</label>
-                <input type="text" name="createdBy" value="<%=course.instructor%>"
-                    placeholder="<%=course.instructor%>"><br>
-                <label>Course Name :&emsp;</label>
-                <input type="text" name="forCourse" value="<%=course.code%>" placeholder="<%=course.code%>"><br>
-                <label>Title for assignment :&emsp;</label>
-                <input type="text" name="assignTitle" placeholder="Assignment Name"><br>
-                <label>Description :&emsp;</label>
-                <input type="text" name="description" style="height: 70px;"><br>
-                <label>Due Date :&emsp;</label>
-                <input type="date" name="deadline"><br>
-
-                <label>Upload Assignment :&emsp;</label>
-                <input type="file" name="uploadFile" id="uploadFile" required><br>
-                <input type="submit" value="Submit" id="closeAssign" />
-            </form>
+          </div>
+          <div class="row">
+              <div class="col">
+                <a href="" style="text-decoration: none; color: #f7a11c;">Course Page</a>
+              </div>
+              <div class="col">
+                <a href="create-assignment?code=<%=course.code%>" style="text-decoration: none; color: #f7a11c;">Create Assignment</a>
+            </div>
+            <div class="col">
+                <a href="viewsubmission?code=<%=course.code%>" style="text-decoration: none; color: #f7a11c;">View Submissions</a>
+            </div>
+          </div>
+          <hr>
+      </center>
+      <div class="myCard" style="background-image: url('uploads/<%=course.pic%>');">
+        <div class="personalCard">
+         <span style="font-size: 30px; margin-left: 30px;">Welcome, </span><span style="color: #f7a11c; font-weight: 800; font-size: 20px;"> <%=user.name%></span><span style="font-size: 20px;"> to </span><span style="font-size: 20px; font-weight: 700;"><%=course.name%> - <%=course.code%> </span><span style="font-size: 20px;">course.</span> <span>
         </div>
-    </div>
+        <div class="writeup" style="margin-top: 2.5%;">
+            <!-- <p style="font-size: 25px; color: white;">-<%=course.instructor%> (Course Instructor)</p> -->
+          <p style="font-size: 20px; color: white;">The course offered by you has capacity of <%=course.cap%> for both offline and online classes. For each course you offer, you can add new assignments and check and grade submissions of your students. <span style="color: #f7a11c; font-weight: 800; font-size: 20px;">Happy Teaching!</span> </p>  
+        </div>
+      </div> <br><br>
 
-    <!-- show uploaded assignments -->
-    <div style="margin-left: 50px; margin-right: 50px;">
-        <h3>Your Uploaded Assignments</h3>
-        <table id="uploadedAssign" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Title</th>
+      <div class="container">
+        <div class="row">
+        <div class="meetL" style="width: 300px;">
+          <img src="uploads/meetteams.png" style="width: 150px; height: 60px; margin-top: 2px;">
+          <p style="margin-top: 3%;">MeetLink for the class : <span style="color: #f7a11c; font-weight: 600; "><%=course.meetlink%></span></p>
+          <div><button class="btn btn-primary" style="background-color: #f7a11c;">JOIN</button> Update <a href="/create-course" style="color: #f7a11c; font-weight: 500;">here</a></div>
+          
+        </div>
+
+        <div class="col offL">
+          <label style="color: brown; font-weight: 500;">Offline Class Update</label><br><br>
+          <div class="row">
+              <div class="col">
+          <form method="get" action="/updateseat">
+            <label>Update number of offline seats for pandemic : </label><br>
+            <input name="course" type="text" value="<%=course.code%>" placeholder="<%=course.code%>" hidden>
+            <input name="offlineSeats" type="number" value="<%=course.offlineSeats%>"
+                placeholder="<%=course.cap%>">
+            <input type="submit" value="Submit" style="background-color: #f7a11c; color: aliceblue; font-weight: 500;" />
+        </form>
+    </div>
+    <div class="col">
+        <img src="uploads/offline-lec.jpg" style="width: auto; height: 120px; float: right; margin-top: -10%;">
+    </div>
+</div>
+        </div>
+      </div>
+      
+    </div>
+  <br>
+  <div class="container" style="border: solid 2px black;">
+    <h3 style="color: #403b87; margin-top: 2%;">Your Uploaded Assignments!</h3>
+    <table id="uploadedAssign" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Title</th>
                     <th>Description</th>
                     <th>Due Date</th>
                     <th>File</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% course.assignment.forEach(function(item){ %>
-                    <tr>
-                        <td>
-                            <%= item.title%>
-                        </td>
-                        <td>
-                            <%= item.description%>
-                        </td>
-                        <td>
-                            <%= item.deadline%>
-                        </td>
-                        <td>
-                            <a href="uploads/<%= item.file%>" target="_blank">question paper</a>
-                        </td>
-                    </tr>
-                    <% }) %>
-            </tbody>
-        </table>
-    </div>
-    <div>
-        <h1><a href="viewsubmission?code=<%=course.code%>">View Submissions</a><br></h1>
-    </div>
-    <!-- submissions -->
-    <!-- <div style="margin-left: 50px;">
-        <h3>View Submissions</h3>
-        <table id="submissions" class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>title</th>
-                <th>Student Name</th>
-                <th>Submission File</th>
-                <th>Assign Grade</th>
             </tr>
         </thead>
         <tbody>
             <% course.assignment.forEach(function(item){ %>
-            <tr>
-                <td>
-                    <%=item.title%>
-                </td>
-                <td>
-                    <%=item.submission%>
-                </td>
-                <td>
-                    <%= item.submission%>
-                </td>
-                <td>
-                    <select></select>
-                </td>
-            </tr>
-            <% }) %>
+                <tr>
+                    <td>
+                        <%= item.title%>
+                    </td>
+                    <td>
+                        <%= item.description%>
+                    </td>
+                    <td>
+                        <%= item.deadline%>
+                    </td>
+                    <td>
+                        <a href="uploads/<%= item.file%>" target="_blank">question paper</a>
+                    </td>
+                </tr>
+                <% }) %>
         </tbody>
+    </table>
+</div>
+<br>
+<div class="container" style="border: solid 2px black;">
+    <h3 style="color: #403b87; margin-top: 2%;">Students attending offline classes are :</h3>
+    <% if(course.offlineStud!=null) { %>
+        <!-- <%=course.offlineStud.length%> -->
+        <table id="offlinestudents" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email-ID</th>
+                    <th>Remove From Offline</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <% course.offlineStud.forEach(function(item){ %>
+                    <tr>
+                        <td>
+                            <%= item.name%>
+                        </td>
+                        <td>
+                            <%= item.email%>
+                        </td>
+                        <td>
+                            <input id="<%=item.code%>" type="button" value="Remove"
+                                onclick='remove("<%=course.code%>","<%=item.email%>")'>
+                        </td>
+
+                    </tr>
+                    <% }) %>
+            </tbody>
         </table>
-    </div> -->
+
+        <% } %>
+</div>
+<br><br><br>
 </body>
 <script>
     $(document).ready(function () {

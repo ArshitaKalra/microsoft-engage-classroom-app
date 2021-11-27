@@ -857,6 +857,22 @@ app.get('/viewsubmission',checkTeacher, (req,res)=>{
         }
     });
 })
+app.get('/create-assignment',checkTeacher, (req,res)=>{
+    const code=req.query.code;
+    // console.log(code);
+    courseCol.find({code: code}, function (err, course){
+        if (err) {
+            console.log(err);
+        } else {
+        
+           
+            res.render("create-assignment",{
+                course:course[0]
+            })
+            
+        }
+    });
+})
 
 app.post('/assignGrade', (req,res)=>{
     var code = req.body.course;

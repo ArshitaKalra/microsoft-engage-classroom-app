@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<title>MSEP</title>
+
+<link rel="stylesheet" href="../public/css/navbar.css">
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css"> -->
+<!-- <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+<body>
+    <center>
+        <div class="container">
+          <div id="nav-placeholder">
+    
+          </div>
+          
+          <script>
+          $(function(){
+            $("#nav-placeholder").load("navbar-teacher.html");
+          });
+          </script><br><br><br>
+          <div>
+            <h1 style="color: #403b87; font-weight: 700; margin-top: 2%;">Create assignments for <%=course.name%></h1>
+            <br>
+          </div>
+          <div class="row">
+              <div class="col">
+                <a href="tsinglecoursepage?code=<%=course.code%>" style="text-decoration: none; color: #f7a11c;">Course Page</a>
+              </div>
+              <div class="col">
+                <a href="create-assignment?code=<%=course.code%>" style="text-decoration: none; color: #f7a11c;">Create Assignment</a>
+            </div>
+            <div class="col">
+                <a href="viewsubmission?code=<%=course.code%>" style="text-decoration: none; color: #f7a11c;">View Submissions</a>
+            </div>
+          </div>
+          <hr>
+      </center>
+<div class="container">
+      <div class="row" style="margin-top: 5%;">
+        <div class="col-md-10 offset-md-1 text-center" style="background-color: #4723D9;">
+            <h2 style="color: white;"> Create Assignment </h2>
+        </div>
+    </div>
+    <br>
+    <div class="row" >
+        <div class="col-md-10 offset-md-1 border">
+            <form 
+            method="POST" enctype="multipart/form-data" action="/addAssign">
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Assignment Created By :</label>
+                            <input type="text" name="createdBy" value="<%=course.instructor%>"
+                            placeholder="<%=course.instructor%>"><br>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Course Name :</label>
+                            <input type="text" name="forCourse" value="<%=course.code%>" placeholder="<%=course.code%>"><br>
+                        </div>
+                    </div><br>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Title for assignment :&emsp;</label>
+                            <input type="text" name="assignTitle" placeholder="Assignment Name"><br>
+                            
+                        </div>
+                    </div>
+                </div><br>
+                <div class='form-row'>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Description :&emsp;</label>
+                <input type="text" name="description" style="height: 70px;"><br>
+                          
+                         
+                        </div>
+                    </div><br>
+                    <div class="col-md-4">
+                       <div class="form-group">
+                        <label>Due Date :&emsp;</label>
+                        <input type="date" name="deadline"><br>
+                       </div>
+                        
+                    </div>
+                </div><br>
+
+                
+                 <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Upload Assignment :&emsp;</label>
+                            <input type="file" name="uploadFile" id="uploadFile" required><br>
+                            
+                        </div>
+                    </div>
+                </div><br>
+
+                <div class="form-row">
+                    <div class="col-md-12 text-center">
+                        <input type="submit" value="Submit" id="closeAssign" style="background-color: #f7a11c;" />
+                      
+                    </div>
+                </div>
+                </div>
+            </form>
+            <br><br>
+        </div>
+     
+    </div>
+</div>
+      <br><br><br>
+</body>
+
+</html>

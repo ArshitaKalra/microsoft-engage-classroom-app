@@ -53,15 +53,14 @@
 
         <script>
             $(function () {
-                $("#nav-placeholder").load("/navbar.html");
+                $("#nav-placeholder").load("/navbar-teacher.html");
             });
         </script><br><br><br>
-        <div class="row">
-            <div class="col-md-10 offset-md-1 text-center  bg-primary">
-                <h2> Profile </h2>
-            </div>
-        </div>
-        <div class="row ">
+ <div class="row" style="margin-top: 5%;">
+    <div class="col-md-10 offset-md-1 text-center" style="background-color: #4723D9;">
+        <h2 style="color: white;"> Create Course</h2>
+    </div>
+</div>        <div class="row ">
             <div class="col-md-10 offset-md-1 border">
                 <form method="POST"  action="create-course">
 
@@ -154,57 +153,58 @@
 
                     <div class="form-row">
                         <div class="col-md-4 offset-md-4 form-group text-center">
-                            Profile Pic: <br>
+                            Course Pic: <br>
 
                             <img src="uploads/course.png" class="mt-1 mb-1" width="100" height="100" alt="" id="ppic">
                             <input type="file" accept="image/*" name="pic" id="pic" onchange="showpreview(this,ppic);">
 
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="col-md-1">
+                    <br><br>
+                    <div class="form-row" style="margin-left: 3%;">
+                        <div class="col">
                             <input type="checkbox" id="monday" name="monday" value="monday">
                             <label for="monday">Monday</label><br>
                             <input type="time" id="tmonday" name="tmonday">
                         </div>
-                        <div class="col-md-1 ">
+                        <div class="col">
                             <input type="checkbox" id="tuesday" name="tuesday" value="tuesday">
                             <label for="tuesday">Tuesday</label><br>
                             <input type="time" id="ttuesday" name="ttuesday">
                         </div>
-                        <div class="col-md-1 ">
+                        <div class="col">
                             <input type="checkbox" id="wednesday" name="wednesday" value="wednesday">
                             <label for="wednesday">Wednesday</label><br>
                             <input type="time" id="twednesday" name="twednesday">
                         </div>
-                        <div class="col-md-1 ">
+                        <div class="col">
                             <input type="checkbox" id="thursday" name="thursday" value="thursday">
                             <label for="thursday">Thursday</label><br>
                             <input type="time" id="tthursday" name="tthursday">
                         </div>
-                        <div class="col-md-1">
+                        <div class="col">
                             <input type="checkbox" id="friday" name="friday" value="friday">
                             <label for="friday">&ensp; Friday</label><br>
                             <input type="time" id="tfriday" name="tfriday">
                         </div>
-                        <div class="col-md-1">
+                        <div class="col">
                             <input type="checkbox" id="saturday" name="saturday" value="saturday">
                             <label for="saturday">Saturday</label><br>
                             <input type="time" id="tsaturday" name="tsaturday">
                         </div>
-                        <div class="col-md-1">
+                        <div class="col">
                             <input type="checkbox" id="sunday" name="sunday" value="sunday">
                             <label for="sunday">Sunday</label><br>
                             <input type="time" id="tsunday" name="tsunday">
                         </div>
 
                     </div>
+                    <br><br>
 
                     <div class="form-row">
                         <div class="col-md-12 text-center">
                             <input type="submit" value="Save" name="btn" class="btn btn-primary" id="btnSave"
-                                onclick="alert1()">
+                            style="background-color: #f7a11c;" onclick="alert1()">
 
                         </div>
                     </div>
@@ -215,7 +215,7 @@
 
     </div>
 
-
+<br><br><br>
 
 
 </body>

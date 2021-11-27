@@ -86,6 +86,22 @@ a {
   color: white;
 }
 
+.myvCard {
+  align-items: center;
+  width: 1400px;
+  margin-top: 0%;
+  margin-left: 12%;
+  /* height: 250px; */
+  /* background-color: #403b87; */
+  border-radius: 25px;
+}
+
+.personalvCard {
+  padding-top: 1px;
+  padding-left: 20px;
+  color: white;
+}
+
 .writeup {
   width: 1200px;  
   padding-top: 20px;
