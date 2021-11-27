@@ -92,10 +92,44 @@ a {
   padding-left: 40px;
 }
 
+.meetL {
+  width: 100px;
+  height: 200px;
+  border: solid;
+  border-color: black;
+  border-width: 2px;
+}
+
+.offL {
+  margin-left: 2%;
+  width: 500px;
+  height: 125px;
+  border: solid;
+  border-color: black;
+  border-width: 2px;
+}
+
+
 .card-text {
     font-size: 20px;
 }
 
+.courseCard {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 300px;
+  height: 300px;
+  margin-left: 5%;
+  border-radius: 20px;
+}
+
+.courseCard:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.courseContainer {
+  padding: 5px 16px;
+}
 .sidebar {
     height: 100%;
     width: 0;
