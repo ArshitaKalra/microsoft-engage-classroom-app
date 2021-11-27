@@ -8,8 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../public/css/navbar.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+         crossorigin="anonymous">
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
  >
@@ -52,37 +56,68 @@
         });
         </script><br><br><br>
         <center>
-            <h3>MAIN PAGE </h3> <br>
-            <hr><br>
+            <!-- <h3>MAIN PAGE </h3> <br> -->
+            <!-- <hr><br> -->
+            <p style="color: #403b87; margin-top: 60px; font-size: 30px; font-weight: 600;">An <span
+                style="color: #f7a11c; font-family: 'Gill Sans Extrabold', monospace;">Engaging</span> learning App
+            for interactive classrooms!</p> <br>
+        <br>
         </center>
         <div class="col-md-8 offset-md-2 " id="home">
-
-            <a href="/home"> HOME STUDENT </a><br><br>
+            <center>
+            <span style="font-size: 20px;">Go to </span> <a href="/home" style=" font-weight: 900; color: #403b87; font-size: 20px;"> HOME,</a><span style="font-size: 20px;"> STUDENT </span><br><br>
             <form method="post" action="/logout">
-                <button>Logout</button><br><br>
+                <button style="width: 50%;border:white; background-color: #f7a11c;"><p style="font: 30px; color: white; font-weight: 600;"><br>LOGOUT</p></button>
             </form>
+        </center>
         </div>
         <div class="col-md-8 offset-md-2 " id="homet">
 
-            <a href="/homet"> HOME TEACHER</a><br><br>
-            <form method="post" action="/logout">
-                <button>Logout</button><br><br>
-            </form>
+            <center>
+                <span style="font-size: 20px;">Go to </span> <a href="/homet" style=" font-weight: 900; color: #403b87; font-size: 20px;"> HOME,</a><span style="font-size: 20px;"> TEACHER </span><br><br>
+                <form method="post" action="/logout">
+                    <button style="width: 50%;border:white; background-color: #f7a11c;"><p style="font: 30px; color: white; font-weight: 600;"><br>LOGOUT</p></button>
+                </form>
+            </center>
         </div>
-        <div id="login">
-        <div class="col-md-8 offset-md-2"  style="display: true" ;>
-            <h1>Student</h1>
 
-            <a href="/login">LOGIN</a><br><br>
-            <a href="/register">REGISTER</a>
+    <div id="login" class="row" style="margin-top: 20px;">
+        <div class="col-lg-6 mb-4" style="width: 500px; margin-left: 12%; display: true;">
+            <div class="card" style="background-color: #F7F6FB;">
+                <img class="card-img-top" src="" alt="">
+                
+                <div class="card-body" style="height: 300px;">
+                    <center>
+                    <h5 class="card-title" style="color: #403b87; font-weight: 800; font-size: 30px;">Student</h5><hr>
+                    <p class="card-text">
+                        One stop to enjoy virtual classes during this pandemic!
+                    </p> <br>
+                    
+                    <button class="loginbtn"><a href="/login" class="lgnbtn">LOGIN</a></button><br><br>
+                        <button class="loginbtn"><a href="/register" class="lgnbtn">REGISTER</a></button>
+                    </center>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8 offset-md-2"  style="display: true" ;>
-            <h1>Teacher</h1>
+        <div class="col-lg-6 mb-4" style="width: 500px; display: true;">
+            <div class="card" style="background-color: #F7F6FB;">
+                <img class="card-img-top" src="" alt="">
 
-            <a href="/logint">LOGIN</a><br><br>
-            <a href="/registert">REGISTER</a>
+                <div class="card-body" style="height: 300px;">
+                    <center>
+                    <h5 class="card-title" style="color: #403b87; font-weight: 800; font-size: 30px;">Teacher</h5><hr>
+                    <p class="card-text">
+                        Teach, interact, assign tests and grade your students!
+                    </p><br>
+                      
+                    <button class="loginbtn"><a href="/logint" class="lgnbtn">LOGIN</a></button><br><br>
+                    <button class="loginbtn"><a href="/registert" class="lgnbtn">REGISTER</a></button>
+                </center>
+                </div>
+            </div>
         </div>
     </div>
+    
     </div>
     <!--to be ignored hidden value-->
     <div id="bool" style="display: none"><%=bool%></div>

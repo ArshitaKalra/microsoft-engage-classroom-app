@@ -1,0 +1,164 @@
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+:root {
+    --header-height: 3rem;
+    --nav-width: 68px;
+    --first-color: #4723D9;
+    --first-color-light: #AFA5D9;
+    --white-color: #e7e5f0;
+    --body-font: 'Nunito', sans-serif;
+    --normal-font-size: 1rem;
+    --z-fixed: 100
+}
+
+*,
+::before,
+::after {
+    box-sizing: border-box
+}
+
+body {
+    position: relative;
+    margin: var(--header-height) 0 0 0;
+    padding: 0 1rem;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    transition: .5s
+}
+
+a {
+    text-decoration: none
+}
+
+.navbar-custom {
+    background-color: var(--white-color);
+}
+.navbar-brand{
+    color: #403b87;
+}
+.nav-link {
+    color: #403b87;
+    font-weight: 500;
+}
+.head-logo {
+    color: #f7a11c;
+    font-size: larger;
+    font-weight: bold;
+    font-style: normal;
+    font-family: "Gill Sans Extrabold", monospace;
+}
+
+.loginbtn {
+    background-color:antiquewhite;
+    width: 300px;
+    border: antiquewhite;
+}
+.lgnbtn {
+    color: #403b87;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.userImg {
+  margin-left: 88.5%;
+  margin-top: -11.5%;
+}
+
+.myCard {
+  align-items: center;
+  width: 1400px;
+  margin-top: 0%;
+  margin-left: 12%;
+  height: 250px;
+  background-color: #403b87;
+  border-radius: 25px;
+}
+
+.personalCard {
+  padding-top: 20px;
+  padding-left: 20px;
+  color: white;
+}
+
+.writeup {
+  width: 1200px;  
+  padding-top: 20px;
+  padding-left: 40px;
+}
+
+.card-text {
+    font-size: 20px;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #403b87;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    border: none;
+  }
+  
+  .sidebar a {
+    padding-bottom: 10px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #f7a11c;
+    display: block;
+    transition: 0.3s;
+    border: none;
+  }
+  
+  .sidebar a:hover {
+    color: #f1f1f1;
+    border: none;
+  }
+  
+  .sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    border: none;
+  }
+  
+  .openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: var(--white-color);
+    color: white;
+    padding: 10px 10px;
+    border: none;
+  }
+  
+  .openbtn:hover {
+    background-color: var(--white-color);
+    border: none;
+  }
+  .mysideboard {
+      margin-top: 50%;
+  }
+  
+  #main {
+    transition: margin-left .5s;
+    /* padding: 16px; */
+    border: none;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+  }

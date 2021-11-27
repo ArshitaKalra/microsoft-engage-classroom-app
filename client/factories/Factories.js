@@ -9,7 +9,7 @@ app.factory('userFactory', function($http, $location) {
 		$http.get('/user').success(function(data) {
 			angular.forEach(data, function(regUser) {
 				if(user.name == regUser.name) {
-					console.log(user.name, "matches", regUser.name);
+					// console.log(user.name, "matches", regUser.name);
 					newUser = false;
 					thisUser = regUser;
 					sessionStorage.setItem("currentuser", thisUser.name);
@@ -19,9 +19,9 @@ app.factory('userFactory', function($http, $location) {
 			})
 // If user does not exist, create new user and redirect to dashboard
 			if(newUser == true) {
-				console.log("User is new, Creating...");
+				// console.log("User is new, Creating...");
 				$http.post('/user', user).success(function(data) {
-					console.log("New user has been created...", data)
+					// console.log("New user has been created...", data)
 					thisUser = data;
 					//using session storage to avoid losing data over refresh of dashboard
 					sessionStorage.setItem("currentuser", thisUser.name);
@@ -147,7 +147,7 @@ app.factory('postFactory', function($http) {
 			$http.post('/posts/'+post._id, {comments: allComments}).success(function(info) {
 				callback(info);
 			})
-			console.log("comments from this post that match user", comments);
+			// console.log("comments from this post that match user", comments);
 		})
 	}
 	return factory;

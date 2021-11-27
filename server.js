@@ -63,6 +63,22 @@ const redirectHome = (req, res, next) => {
     }
 }
 
+const checkStudent = (req, res, next) => {
+    if (req.session.occupation==0) {
+        next();
+    } else {
+        res.redirect('/homet')
+    }
+}
+
+const checkTeacher = (req, res, next) => {
+    if (req.session.occupation==1) {
+        next();
+    } else {
+        res.redirect('/home')
+    }
+}
+
 app.use(bodyparser.urlencoded({
     "extended": true
 }));
@@ -124,7 +140,8 @@ app.get('/', (req, res) => {
     })
 
 })
-app.get('/home', redirectLogin, (req, res) => {
+
+app.get('/home', redirectLogin,checkStudent, (req, res) => {
     const {
         user
     } = res.locals;
@@ -133,9 +150,6 @@ app.get('/home', redirectLogin, (req, res) => {
     });
 
 })
-
-
-
 app.get('/login', redirectHome, (req, res) => {
   
     res.render("login", {
@@ -148,37 +162,8 @@ app.get('/register', redirectHome, (req, res) => {
         error: ""
     })
 })
-app.get('/homet', redirectLogin, (req, res) => {
-    const {
-        user
-    } = res.locals;
-    res.render("homet", {
-        user: res.locals.user
-    });
-
-})
-app.get('/logint', redirectHome, (req, res) => {
-  
-    res.render("logint", {
-        error: ""
-    })
-})
-
-app.get('/registert', redirectHome, (req, res) => {
-    res.render("registert", {
-        error: ""
-    })
-})
-
-
-
-app.get('/profile', redirectLogin, (req, res) => {
+app.get('/profile', redirectLogin,checkStudent, (req, res) => {
     res.render("profile", {
-        user: res.locals.user
-    });
-})
-app.get('/profilet', redirectLogin, (req, res) => {
-    res.render("profilet", {
         user: res.locals.user
     });
 })
@@ -190,34 +175,6 @@ app.post("/profile", redirectLogin, upload.single('pic'), (req, res) => {
         req.body.pic = req.body.hdn;
     }
     usersCol.findOneAndUpdate({
-        email: req.body.email
-    }, {
-        $set: {
-            mobile: req.body.mobile,
-            pic: req.body.pic,
-            occupation: req.body.institution,
-            address: req.body.address,
-            dob: req.body.dob
-        }
-    }, {
-        new: true
-    }).then((docs) => {
-        if (docs) {
-
-            res.redirect("profile");
-        } else {
-            res.send("Error Occured");
-        }
-    })
-
-})
-app.post("/profilet", redirectLogin, upload.single('pic'), (req, res) => {
-    if (req.file) {
-        req.body.pic = req.file.filename;
-    } else {
-        req.body.pic = req.body.hdn;
-    }
-    teacherCol.findOneAndUpdate({
         email: req.body.email
     }, {
         $set: {
@@ -313,206 +270,6 @@ app.post('/register', redirectHome, (req, res) => {
 
 })
 
-
-app.post('/logint', redirectHome, (req, res) => {
-    const {
-        email,
-        password
-    } = req.body;
-    if (email && password) {
-        teacherCol.findOne({
-                email: email
-            })
-            .then(function (result) {
-
-                if (result) {
-                    req.session.userid = email;
-                    req.session.occupation=1;
-                    res.redirect('/homet')
-                } else
-                    return res.redirect('/logint');
-
-            })
-            .catch(function (msg) {
-                console.log(msg)
-            });
-
-    } else
-        res.render('logint', {
-            error: "Please Fill Details Properly"
-        });
-
-})
-app.post('/registert', redirectHome, (req, res) => {
-    const {
-        name,
-        email,
-        password
-    } = req.body;
-    if (name && email && password) {
-        teacherCol.findOne({
-                email: email
-            })
-            .then((data) => {
-                if (data) {
-                    console.log("user exist")
-                    return res.render("registert", {
-                        error: "USER ALREADY EXISTS"
-                    });
-                }
-                req.body.pic = "user.png";
-                var collection = new teacherCol(req.body);
-
-             
-               
-                collection.save(function (err, doc) {
-                    if (err)
-                        console.log(err)
-                  
-                    req.session.userid = email;
-                    req.session.occupation=1;
-                    res.redirect('/homet')
-
-
-                });
-
-
-
-            })
-    } else
-        res.render("registert", {
-            error: "Please Fill Details Properly"
-        })
-
-})
-app.post('/logout', redirectLogin, (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return res.redirect('/home')
-        }
-        res.clearCookie(SESS_name);
-        res.redirect('/');
-    })
-
-})
-
-/*
-app.get('/', (req, res) => {        
-    res.sendFile('index1', {root: __dirname});      
-});*/
-app.get('/create-course', (req, res) => {        
-    res.render("create-course", {
-        user: res.locals.user
-    });      
-
-});
-
-app.post('/create-course', (req, res) => {        
-   console.log(JSON.stringify(req.body));
-   const {
-    code
-} = req.body;
-if (code) {
-    courseCol.findOne({
-            code: code
-        })
-        .then((data) => {
-            if (data) {
-                console.log("course exist")
-                return res.render("create-course", {
-                    error: "USER ALREADY EXISTS"
-                });
-            }
-            req.body.pic = "course.png";
-            var schedule=[];
-            if(req.body.monday){
-                schedule[0]=req.body.tmonday
-            }
-            else{
-                schedule[0]="";
-            }
-            if(req.body.tuesday){
-                schedule[1]=req.body.ttuesday
-            }
-            else{
-                schedule[1]="";
-            }
-            if(req.body.wednesday){
-                schedule[2]=req.body.twednesday
-            }
-            else{
-                schedule[2]="";
-            }
-            if(req.body.thursday){
-                schedule[3]=req.body.tthursday
-            }
-            else{
-                schedule[3]="";
-            }
-            if(req.body.friday){
-                schedule[4]=req.body.tfriday
-            }
-            else{
-                schedule[4]="";
-            }
-            if(req.body.saturday){
-                schedule[5]=req.body.tsaturday
-            }
-            else{
-                schedule[5]="";
-            }
-            if(req.body.sunday){
-                schedule[6]=req.body.tsunday
-            }
-            else{
-                schedule[6]="";
-            }
-            console.log(schedule);
-            req.body.schedule=schedule;
-            var collection = new courseCol(req.body);
-
-         
-           
-            collection.save(function (err, doc) {
-                if (err)
-                    console.log(err)
-              
-            
-
-
-            });
-
-
-
-        })
-        teacherCol.findOneAndUpdate({
-            email: req.session.userid
-        }, {
-            $push: {
-                courseoffered: req.body.code,
-               
-            }
-        }, {
-            new: true
-        }).then((docs) => {
-            if (docs) {
-    
-               // res.redirect("profile");
-            } else {
-                res.send("Error Occured");
-            }
-        })
-
-
-        
-} else
-    res.render("registert", {
-        error: "Please Fill Details Properly"
-    })
-   
-
-});
-
 app.get('/phonebook', (req, res) => {        
     usersCol.find({}, function (err, studDetails){
         if (err) {
@@ -532,7 +289,9 @@ app.get('/phonebook', (req, res) => {
     });
 });
 
-app.get('/allcourses', (req, res) => {        
+
+
+app.get('/allcourses',checkStudent, (req, res) => {        
     courseCol.find({}, function (err, courses){
         if (err) {
             console.log(err);
@@ -546,7 +305,7 @@ app.get('/allcourses', (req, res) => {
 });
 
 
-app.get('/enroll',(req,res)=>{
+app.get('/enroll',checkStudent,(req,res)=>{
     // console.log(req.session.userid)
     const code=req.query.code;
     var start,classes,schedule,name;
@@ -620,7 +379,367 @@ app.get('/enroll',(req,res)=>{
     })
 })
 
-app.get('/remove',(req,res)=>{
+app.get('/calendar', checkStudent, (req, res) => {
+    const {
+        user
+    } = res.locals;
+    res.render("calendar", {
+        user: res.locals.user
+    });
+
+})
+
+app.get('/unbookSeat',checkStudent,(req,res)=>{
+    
+    courseCol.findOneAndUpdate({
+        code:req.query.code
+    },
+    {$pull:{
+        offlineStud:{email:req.session.userid}
+    }
+    }
+    ).then((docs)=>{
+        res.send("Deleted");
+    })
+})
+
+
+app.post('/submitAssign', upload.single("submission"), (req,res)=>{
+    // console.log(req.body)
+    var filename = req.file.filename;
+    const url='/singlecoursepage?code='+req.body.scourse;
+    courseCol.findOneAndUpdate({
+        code: req.body.scourse,
+        "assignment.title": req.body.assignCode
+    },{
+        $push:{
+            "assignment.$.submission":{
+                "name":req.session.name,
+                "filename":filename
+            }
+        }
+    }).then((docs) => {
+        if (docs) {
+            res.redirect(url);
+        } else {
+            res.send("Error Occured");
+        }
+    })
+})
+
+app.get('/course-enrolled',checkStudent, (req, res) => {   
+    var coursesEnrolled=res.locals.user.course;
+    var courseEnrolledDetails=[];
+    courseCol.find({}, function (err, courses){
+        if (err) {
+            console.log(err);
+        } else {
+            coursesEnrolled.forEach((item)=>{
+                courseEnrolledDetails.push(courses.find(coursedetail => coursedetail.code==item))
+  
+            })
+
+            res.render("course-enrolled",{
+                courses:courseEnrolledDetails
+            })
+            
+        }
+    });
+   
+});
+
+app.get('/singlecoursepage',checkStudent,(req,res)=>{
+
+    const code=req.query.code;
+
+    courseCol.find({code: code}, function (err, course){
+        if (err) {
+            console.log(err);
+        } else {
+        
+           
+            res.render("singlecoursepage",{
+                course:course[0],
+                // user:res.locals.user
+            })
+            
+        }
+    });
+})
+app.get('/bookseat',checkStudent,(req,res)=>{
+    courseCol.findOneAndUpdate({
+        code: req.query.code
+    }, {
+        $push: {
+            course:  req.session.userid,
+        },
+        $inc:{
+            bookedSeats: 1
+         }
+    },    
+    {
+        new: true
+    }).then((docs) => {
+        if (docs) {
+            res.send("Seat Booked");
+           // res.redirect("profile");
+        } else {
+            res.send("Error Occured");
+        }
+    })
+})
+
+app.get('/homet', redirectLogin,checkTeacher, (req, res) => {
+    const {
+        user
+    } = res.locals;
+    res.render("homet", {
+        user: res.locals.user
+    });
+
+})
+app.get('/logint', redirectHome, (req, res) => {
+  
+    res.render("logint", {
+        error: ""
+    })
+})
+
+app.get('/registert', redirectHome, (req, res) => {
+    res.render("registert", {
+        error: ""
+    })
+})
+
+
+
+
+app.get('/profilet', redirectLogin,checkTeacher, (req, res) => {
+    res.render("profilet", {
+        user: res.locals.user
+    });
+})
+
+
+app.post("/profilet", redirectLogin, upload.single('pic'), (req, res) => {
+    if (req.file) {
+        req.body.pic = req.file.filename;
+    } else {
+        req.body.pic = req.body.hdn;
+    }
+    teacherCol.findOneAndUpdate({
+        email: req.body.email
+    }, {
+        $set: {
+            mobile: req.body.mobile,
+            pic: req.body.pic,
+            occupation: req.body.institution,
+            address: req.body.address,
+            dob: req.body.dob
+        }
+    }, {
+        new: true
+    }).then((docs) => {
+        if (docs) {
+
+            res.redirect("profile");
+        } else {
+            res.send("Error Occured");
+        }
+    })
+
+})
+
+                    // console.log("user exist")
+
+app.post('/logint', redirectHome, (req, res) => {
+    const {
+        email,
+        password
+    } = req.body;
+    if (email && password) {
+        teacherCol.findOne({
+                email: email
+            })
+            .then(function (result) {
+
+                if (result) {
+                    req.session.userid = email;
+                    req.session.occupation=1;
+                    res.redirect('/homet')
+                } else
+                    return res.redirect('/logint');
+
+            })
+            .catch(function (msg) {
+                console.log(msg)
+            });
+
+    } else
+        res.render('logint', {
+            error: "Please Fill Details Properly"
+        });
+
+})
+app.post('/registert', redirectHome, (req, res) => {
+    const {
+        name,
+        email,
+        password
+    } = req.body;
+    if (name && email && password) {
+        teacherCol.findOne({
+                email: email
+            })
+            .then((data) => {
+                if (data) {
+                    // console.log("user exist")
+                    return res.render("registert", {
+                        error: "USER ALREADY EXISTS"
+                    });
+                }
+                req.body.pic = "user.png";
+                var collection = new teacherCol(req.body);
+
+             
+               
+                collection.save(function (err, doc) {
+                    if (err)
+                        console.log(err)
+                  
+                    req.session.userid = email;
+                    req.session.occupation=1;
+                    res.redirect('/homet')
+
+
+                });
+
+
+
+            })
+    } else
+        res.render("registert", {
+            error: "Please Fill Details Properly"
+        })
+
+})
+app.post('/logout', redirectLogin, (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/home')
+        }
+        res.clearCookie(SESS_name);
+        res.redirect('/');
+    })
+
+})
+
+
+app.get('/create-course',checkTeacher, (req, res) => {        
+    res.render("create-course", {
+        user: res.locals.user
+    });      
+
+});
+
+app.post('/create-course', (req, res) => {    
+   const {
+    code
+} = req.body;
+if (code) {
+    courseCol.findOne({
+            code: code
+        })
+        .then((data) => {
+            if (data) {
+                // console.log("course exist")
+                return res.render("create-course", {
+                    error: "USER ALREADY EXISTS"
+                });
+            }
+            req.body.pic = "course.png";
+            var schedule=[];
+            if(req.body.monday){
+                schedule[0]=req.body.tmonday
+            }
+            else{
+                schedule[0]="";
+            }
+            if(req.body.tuesday){
+                schedule[1]=req.body.ttuesday
+            }
+            else{
+                schedule[1]="";
+            }
+            if(req.body.wednesday){
+                schedule[2]=req.body.twednesday
+            }
+            else{
+                schedule[2]="";
+            }
+            if(req.body.thursday){
+                schedule[3]=req.body.tthursday
+            }
+            else{
+                schedule[3]="";
+            }
+            if(req.body.friday){
+                schedule[4]=req.body.tfriday
+            }
+            else{
+                schedule[4]="";
+            }
+            if(req.body.saturday){
+                schedule[5]=req.body.tsaturday
+            }
+            else{
+                schedule[5]="";
+            }
+            if(req.body.sunday){
+                schedule[6]=req.body.tsunday
+            }
+            else{
+                schedule[6]="";
+            }
+            // console.log(schedule);
+            req.body.schedule=schedule;
+            var collection = new courseCol(req.body);
+
+         
+           
+            collection.save(function (err, doc) {
+                if (err)
+                    console.log(err)
+            });
+        })
+        teacherCol.findOneAndUpdate({
+            email: req.session.userid
+        }, {
+            $push: {
+                courseoffered: req.body.code,
+               
+            }
+        }, {
+            new: true
+        }).then((docs) => {
+            if (docs) {
+            } else {
+                res.send("Error Occured");
+            }
+        })
+
+
+        
+} else
+    res.render("registert", {
+        error: "Please Fill Details Properly"
+    })
+   
+
+});
+
+
+app.get('/remove',checkTeacher,(req,res)=>{
     
     courseCol.findOneAndUpdate({
         code:req.query.code
@@ -634,20 +753,7 @@ app.get('/remove',(req,res)=>{
     })
 })
 
-app.get('/unbookSeat',(req,res)=>{
-    
-    courseCol.findOneAndUpdate({
-        code:req.query.code
-    },
-    {$pull:{
-        offlineStud:{email:req.session.userid}
-    }
-    }
-    ).then((docs)=>{
-        res.send("Deleted");
-    })
-})
-app.get('/course-offered', (req, res) => {        
+app.get('/course-offered',checkTeacher, (req, res) => {        
     var coursesOffered=res.locals.user.courseoffered;
     var courseOfferedDetails=[];
     courseCol.find({}, function (err, courses){
@@ -667,7 +773,7 @@ app.get('/course-offered', (req, res) => {
     });   
 });
 
-app.get('/updateseat', (req,res)=> {
+app.get('/updateseat',checkTeacher, (req,res)=> {
     var seats = req.query.offlineSeats;
     var code = req.query.course;
     courseCol.findOneAndUpdate({
@@ -691,7 +797,7 @@ app.get('/updateseat', (req,res)=> {
 
 });
 
-app.post('/addAssign', upload.single("uploadFile"), (req,res)=> {
+app.post('/addAssign',upload.single("uploadFile"), (req,res)=> {
     var code = req.body.forCourse;
     var title = req.body.assignTitle;
     var description = req.body.description;
@@ -718,97 +824,7 @@ app.post('/addAssign', upload.single("uploadFile"), (req,res)=> {
     })
 });
 
-app.post('/submitAssign', upload.single("submission"), (req,res)=>{
-    // console.log(req.body)
-    var filename = req.file.filename;
-    const url='/singlecoursepage?code='+req.body.scourse;
-    courseCol.findOneAndUpdate({
-        code: req.body.scourse,
-        "assignment.title": req.body.assignCode
-    },{
-        $push:{
-            "assignment.$.submission":{
-                "name":req.session.name,
-                "filename":filename
-            }
-        }
-    }).then((docs) => {
-        if (docs) {
-            res.redirect(url);
-        } else {
-            res.send("Error Occured");
-        }
-    })
-})
-
-app.get('/course-enrolled', (req, res) => {   
-    var coursesEnrolled=res.locals.user.course;
-    var courseEnrolledDetails=[];
-    courseCol.find({}, function (err, courses){
-        if (err) {
-            console.log(err);
-        } else {
-            coursesEnrolled.forEach((item)=>{
-                courseEnrolledDetails.push(courses.find(coursedetail => coursedetail.code==item))
-  
-            })
-
-            res.render("course-enrolled",{
-                courses:courseEnrolledDetails
-            })
-            
-        }
-    });
-   
-});
-
-app.get('/singlecoursepage',(req,res)=>{
-
-    const code=req.query.code;
-
-    courseCol.find({code: code}, function (err, course){
-        if (err) {
-            console.log(err);
-        } else {
-        
-           
-            res.render("singlecoursepage",{
-                course:course[0],
-                // user:res.locals.user
-            })
-            
-        }
-    });
-})
-app.get('/bookseat',(req,res)=>{
-    courseCol.findOneAndUpdate({
-        code: req.query.code
-    }, {
-        $push: {
-            course:  req.session.userid,
-            // offlineStud: req.session.userid,
-
-        },
-        $inc:{
-            bookedSeats: 1
-            // offlineSeats: -1
-         }
-
-    },
-   
-    
-    {
-        new: true
-    }).then((docs) => {
-        if (docs) {
-            res.send("Seat Booked");
-           // res.redirect("profile");
-        } else {
-            res.send("Error Occured");
-        }
-    })
-})
-app.get('/tsinglecoursepage',(req,res)=>{
+app.get('/tsinglecoursepage',checkTeacher,(req,res)=>{
 
     const code=req.query.code;
     courseCol.find({code: code}, function (err, course){
@@ -825,7 +841,7 @@ app.get('/tsinglecoursepage',(req,res)=>{
     });
 });
 
-app.get('/viewsubmission', (req,res)=>{
+app.get('/viewsubmission',checkTeacher, (req,res)=>{
     const code=req.query.code;
     // console.log(code);
     courseCol.find({code: code}, function (err, course){
@@ -884,9 +900,9 @@ const socket = require('socket.io');
 const io = socket(server);
 
 io.on("connection", function(socket){
-    console.log("made socket connection");
+    // console.log("made socket connection");
     socket.on('disconnect', function() {
-        console.log("Disconnected - Socket ID: ", socket.id);
+        // console.log("Disconnected - Socket ID: ", socket.id);
     })
     socket.on('created_topic', function(data) {
         socket.broadcast.emit('topic_added', data);

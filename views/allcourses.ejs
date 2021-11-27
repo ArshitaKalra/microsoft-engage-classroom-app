@@ -3,7 +3,7 @@
 <html lang="en">
 <title>MSEP</title>
 
-
+<link rel="stylesheet" href="../public/css/navbar.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
@@ -13,23 +13,28 @@
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   
 <body>
+    <center>
+    <div class="container">
     <div id="nav-placeholder">
 
     </div>
     
     <script>
     $(function(){
-      $("#nav-placeholder").load("navbar.html");
+      $("#nav-placeholder").load("navbar-stud.html");
     });
-    </script>
+    </script><br><br><br>
 <div>
-    <h1 style="text-align: center;">All Offered Courses</h1>
+    <h3 style="color: #403b87; margin-top: 2%;">OFFERED COURSES</h3>
+    
+    <hr>
+  </div>
+
 </div>
-<hr>
-<div style="margin-left: 350px; margin-right: 350px;">
-    <h2>Courses</h2>
+</center>
+<div style="margin-left: 350px; margin-right: 350px; margin-top: 4%;">
 <% if(courses!=null) { %>
-    <table id="allcourses" class="table table-striped table-bordered">
+    <table id="allcourses" class="table table-striped table-bordered" style="color: #403b87;">
         <thead>
         <tr>
             <th>Name</th>

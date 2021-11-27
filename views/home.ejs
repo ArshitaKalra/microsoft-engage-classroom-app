@@ -8,15 +8,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../public/css/navbar.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href='fullcalendar/main.css'  rel="stylesheet" />
     <script src='fullcalendar/main.js'></script>
-    <script >console.log(1)
+    <script >
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var eventArray= JSON.stringify('<%=user.schedule%>');
-        console.log( eventArray)
+        // console.log( eventArray)
         var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
     initialDate: '2021-11-07',
@@ -36,7 +37,7 @@
    
 </head>
 
-<body>
+<body style="background-color: white;">
   
 
   <!-- Optional JavaScript -->
@@ -60,25 +61,25 @@
       
       <script>
       $(function(){
-        $("#nav-placeholder").load("navbar.html");
+        $("#nav-placeholder").load("navbar-stud.html");
       });
       </script><br><br><br>
       <div>
-        <h3>HOME PAGE STUDENT</h3><br>
-        <hr><br>
+        <h3 style="color: #403b87;">DASHBOARD</h3>
+        <br>
       </div>
   </center>
-  <h4>
-  <div class="form-row">
-    <div class="col-md-4 offset-md-2 ">
-      <div> NAME : </div>
-      <div id="name " > <%=user.name%></div><br>
-      <div> EMAIL : </div>
-      <div id="email " > <%=user.email%></div>
+  
+  <div class="myCard">
+    <div class="personalCard">
+     <span style="font-size: 40px; margin-left: 30px;">Welcome, </span><span style="color: #f7a11c; font-weight: 800; font-size: 20px;"> <%=user.name%></span><span style="font-size: 20px;"> to our ENGAGE Classroom App. </span>
     </div>
-    
-    <img src="uploads/<%=user.pic%>" width="100" height="100">
-  </h4>
+    <div class="writeup">
+      <p style="font-size: 20px; color: white;"><span style="color: #f7a11c; font-weight: 800; font-size: 20px;">Engage</span> classroom is a one stop solution for all your academic needs. It lets you get hold of all your enrolled courses. You can enroll to any offered course of your interest for the current semester. Update your profile and get to know your peers with our phonebook and discussion forum. With our app, you don't need to worry anymore about your schedule as it gets automatically marked in your calendar. You just need to submit your assignments and check grades, <span style="color: #f7a11c; font-weight: 800; font-size: 20px;">good luck!</span></p>  
+    </div>
+    <div class="userImg">
+    <img src="uploads/<%=user.pic%>" width="100" height="100" >
+  </div>
   </div> <br><br>
 
   
@@ -90,19 +91,32 @@
   </div>
   <div class="container">
     <div class="form-row">
-    <div class="col-md-4">
-      <a href="./course-enrolled">Courses Enrolled</a><br>
-      <a href="./discussion-forum">Discussion</a><br>
-      <a href="./phonebook">Phonebook</a><br>
-      <a href="./report">Weekly Progress Report </a><br>
-      <a href="./allcourses">All Courses</a><br>
-      <a href="./calendar">Calendar</a><br>
-    
-    </div>
-    <div id="calendar" class="col-md-8"></div>
+      <!-- <center> -->
+      <div class="announcement" style="width: 600px;">
+          <div class="card" style="background-color: antiquewhite;">
+            <br><h5 class="card-title" style="color: #403b87; font-weight: 600; font-size: 25px; margin-top: 2px; border-radius: 30px; margin-left: 30%;">Announcements</h5><hr>
+            <div class="card-body" style="height: 300px; overflow-y: auto;">
+              <p style="font-size: 20px">
+                <span style="color: red;">>></span> There is a new assignment for course "Data Science". <br>
+                <span style="color: red;">>></span> You Submitted assignment 2 for course "P.O.P". <br>
+                <span style="color: red;">>></span> There is a new assignment for course "DSA". <br>
+                <span style="color: red;">>></span> You have a "Machine Learning" class scheduled today at 08:37 A.M. <br>
+                <span style="color: red;">>></span> You have a "P.O.P" class scheduled today at 12:15 P.M. <br>
+                <span style="color: red;">>></span> You Submitted assignment 1 for course "P.O.P". <br>
+                <span style="color: red;">>></span> You Submitted assignment 1 for course "Pattern Recognition". <br>
+                <span style="color: red;">>></span> You have a "DSA" class scheduled today at 15:45 P.M. <br>
+            </p> <br>
+              </div>
+          </div>
+        </div>
+      <!-- </center> -->
+    <div id="calendar" style="margin-left: 10%; border: solid black; border-width: 2px; background-image: url('uploads/bg-cal.jpg');"></div>
   </div>
   </div>
-  <div>Dashboard Student</div>
+  <div>
+    <br>
+  </div>
+  <!-- <div>Dashboard Student</div> -->
   
 </body>
 

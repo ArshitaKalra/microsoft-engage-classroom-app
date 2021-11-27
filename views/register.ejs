@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Title</title>
+  <title>MSEP</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -42,27 +42,40 @@
       $("#nav-placeholder").load("/navbar.html");
     });
     </script>
+
     <center>
-      <h3> REGISTER PAGE</h3><br>
-      <hr><br>
-      <form method="post" action="register">
-        <div class="form-row offset-md-2  col-md-8">
-          <div class="col-md-4">NAME</div>
-          <div class="col-md-4 "> <input type="text" name="name" class="form-control" placeholder="enter name"></div>
-        </div><br><br>
-        <div class="form-row offset-md-2  col-md-8">
-          <div class="col-md-4">EMAIL ID</div>
-          <div class="col-md-4 "> <input type="email" name="email" class="form-control" placeholder="enter email"></div>
-        </div><br><br>
-        <div class="form-row offset-md-2  col-md-8">
-          <div class="col-md-4">PASSWORD</div>
-          <div class="col-md-4 "> <input type="password" name="password" class="form-control"
-              placeholder="enter password"></div>
-        </div><br><br>
-        <input type="submit" class="btn-group">
+
+      <p style="color: #403b87; margin-top: 60px; font-size: 30px; font-weight: 600;">Student <span
+        style="color: #f7a11c; font-family: 'Gill Sans Extrabold', monospace;">Register</span> Page</p> <br>
+<br>
+<div class="col-lg-6 mb-4" style="width: 500px; display: true;">
+  <div class="card" style="background-color: #F7F6FB;">
+      <img class="card-img-top" src="" alt="">
       
-      </form><br><br>
-      <a href="login">Log In</a>
+      <div class="card-body" style="height: 400px;">
+          
+            <form method="post" action="register" style="margin-top: 20px;">
+              <div class="form-row">
+                <div class="col-md-4">NAME</div>
+                <div class=""> <input type="text" name="name" class="form-control" placeholder="enter name"></div>
+              </div><br><br>
+              <div class="form-row">
+                <div class="col-md-4">EMAIL ID</div>
+                <div class=""> <input type="email" name="email" class="form-control" placeholder="enter email"></div>
+              </div><br><br>
+              <div class="form-row">
+                <div class="col-md-4">PASSWORD</div>
+                <div class=""> <input type="password" name="password" class="form-control"
+                    placeholder="enter password"></div>
+              </div><br><br>
+              <input type="submit" value="SUBMIT" style="background-color: antiquewhite; font-weight: 500; width: 50%; height: 35px;">
+            </form><br><br>
+            
+          
+      </div>
+  </div>
+</div>
+<span style="font-size: 20px;">Already a user?,  </span><a href="/login" style="font-size: 20px; color: #f7a11c ;">Login Account</a>
     </center>
 
   </div>

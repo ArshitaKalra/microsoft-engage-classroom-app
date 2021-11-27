@@ -5,8 +5,8 @@
 	<title>MSEP-Forum</title>
 
 	<!-- Stylesheets -->
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<!-- <link rel="stylesheet" href="/static/css/style.css"> -->
+	<!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="/static/css/style.css">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 	<!-- Angular -->
@@ -64,6 +64,14 @@ app.config(function($routeProvider) {
 	<!-- Begin Partial EJS views -->
 	<body>
 		<div class="container">
+			<div id="nav-placeholder">
+
+			</div>
+			<script>
+				$(function(){
+				  $("#nav-placeholder").load("navbar.html");
+				});
+				</script>
 			<div ng-view=""></div>
 		</div>
 	</body>
