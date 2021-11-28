@@ -399,7 +399,7 @@ app.get('/unbookSeat',checkStudent,(req,res)=>{
     }
     }
     ).then((docs)=>{
-        res.send("Deleted");
+        res.send("Removed from offline class");
     })
 })
 
@@ -657,7 +657,7 @@ if (code) {
                     error: "USER ALREADY EXISTS"
                 });
             }
-            req.body.pic = "course.png";
+            req.body.pic = "course.jpg";
             var schedule=[];
             if(req.body.monday){
                 schedule[0]=req.body.tmonday
